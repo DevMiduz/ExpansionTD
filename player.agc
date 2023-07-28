@@ -32,6 +32,7 @@
 type Player
 	id as integer
 	lives as integer
+	currency as integer
 endtype
 
 /*

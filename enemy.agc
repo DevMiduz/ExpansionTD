@@ -37,6 +37,9 @@ type Enemy
 	speed as float
 	armour as float
 	shield as float
+	multiplier as float 		// multiplier to adjust enemies toughness by wave by setting a level.
+	currency as integer 		// money gained for killing.
+	score as integer 		// score gained for killing.
 endtype
 
 /*
