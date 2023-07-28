@@ -50,23 +50,32 @@ output_path=
 
 [projectfiles]
 FILE_0=camera.agc;-1
-FILE_1=engine.agc;-1
-FILE_2=game.agc;-1
-FILE_3=helpers.agc;-1
-FILE_4=includes.agc;-1
-FILE_5=input_handler.agc;-1
-FILE_6=key_constants.agc;-1
-FILE_7=main.agc;-1
-FILE_8=scene.agc;-1
-FILE_9=scene_manager.agc;-1
-FILE_10=vector.agc;-1
-FILE_11=constants.agc;-1
+FILE_1=constants.agc;-1
+FILE_2=engine.agc;-1
+FILE_3=game.agc;-1
+FILE_4=helpers.agc;-1
+FILE_5=includes.agc;-1
+FILE_6=input_handler.agc;-1
+FILE_7=key_constants.agc;-1
+FILE_8=main.agc;-1
+FILE_9=scene.agc;-1
+FILE_10=scene_manager.agc;-1
+FILE_11=vector.agc;-1
+FILE_12=grid_pathfinding.agc;-1
+FILE_13=grid.agc;-1
+FILE_14=box.agc;-1
+FILE_15=id_generator.agc;-1
 
 [files]
-FILE_NAME_0=1;includes.agc;12;0
-FILE_NAME_1=0;main.agc;22;1
-FILE_NAME_2=0;scene.agc;60;2
-FILE_NAME_3=0;constants.agc;0;3
+FILE_NAME_0=0;constants.agc;9;0
+FILE_NAME_1=0;includes.agc;25;1
+FILE_NAME_2=0;main.agc;22;2
+FILE_NAME_3=0;scene.agc;60;3
+FILE_NAME_4=0;vector.agc;0;4
+FILE_NAME_5=0;grid_pathfinding.agc;0;5
+FILE_NAME_6=0;grid.agc;0;6
+FILE_NAME_7=1;box.agc;0;7
+FILE_NAME_8=0;id_generator.agc;0;8
 
 [watchvariables]
 

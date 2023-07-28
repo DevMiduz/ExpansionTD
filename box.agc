@@ -5,7 +5,7 @@
  */
 
 /*
-*	vector.agc
+*	box.agc
 * 	CREATED BY: DEV MIDUZ
 *	https://github.com/DevMiduz/AppGameKit_Utility
 *	devmiduz@gmail.com
@@ -13,13 +13,21 @@
 
 /*
 
+	INCLUDES
+
+*/
+
+#include "vector.agc"
+
+/*
+
 	TYPES
 	
 */
 
-type Vector2D
-	x as integer
-	y as integer
+type Box
+	position as Vector2D // top-left
+	size as integer
 endtype
 
 /*
@@ -28,13 +36,13 @@ endtype
 	
 */
 
+function Box_Create(x as integer, y as integer, size as integer)
+	box as Box
+	Box_Set(box, x, y, size)
+endfunction box
 
-function Vector2D_CreateVector(x as integer, y as integer)
-	vector as Vector2D
-	Vector2D_SetVector(vector, x, y)
-endfunction vector
-
-function Vector2D_SetVector(vector ref as Vector2D, x as integer, y as integer)
-	vector.x = x
-	vector.y = y
+function Box_Set(box ref as Box, x as integer, y as integer, size as integer)
+	box.position.x = x
+	box.position.y = y
+	box.size = size
 endfunction

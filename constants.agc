@@ -1,6 +1,29 @@
-// File: constants.agc
-// Created: 23-07-20
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+/*
+*	constants.agc
+* 	CREATED BY: DEV MIDUZ
+*	https://github.com/DevMiduz/ExpansionTD
+*	devmiduz@gmail.com
+*/
+
+/*
+
+	INCLUDES
+	
+*/
+
 #insert "key_constants.agc"
+
+/*
+
+	CONSTANTS
+	
+*/
 
 // Engine Constants
 #constant CONST_GAME_TITLE = "Base Project"

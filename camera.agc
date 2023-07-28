@@ -7,8 +7,14 @@
 /*
 *	camera.agc
 * 	CREATED BY: DEV MIDUZ
-*	https://github.com/DevMiduz/ExpansionTD
+*	https://github.com/DevMiduz/AppGameKit_Utility
 *	devmiduz@gmail.com
+*/
+
+/*
+
+	INCLUDES
+
 */
 
 /*
@@ -21,9 +27,7 @@ type Camera
 	id as integer
 	x as integer
 	y as integer
-	movePerc as float
 	centered as integer
-	speed as float
 endtype
 
 /*
@@ -32,11 +36,29 @@ endtype
 	
 */
 
-// Move
+function Camera_Create(x as integer, y as integer, centered as integer)
+	camera as Camera
+	Camera_CreateRef(camera, x, y, centered)
+endfunction camera
+
+function Camera_CreateRef(camera ref as Camera, x as integer, y as integer, centered as integer)
+	camera.centered = centered
+	Camera_SetPosition(camera, x, y)
+endfunction
+
 function Camera_Move(camera ref as Camera, x as integer, y as integer)
 	camera.x = camera.x + x
 	camera.y = camera.y + y
-	
+	Camera_Update(camera)
+endfunction
+
+function Camera_SetPosition(camera ref as Camera, x as integer, y as integer)
+	camera.x = x
+	camera.y = y
+	Camera_Update(camera)
+endfunction
+
+function Camera_Update(camera ref as Camera)
 	if(camera.centered = 1)
 		setViewOffset( camera.x - (GetVirtualWidth() / 2), camera.y - (GetVirtualHeight() / 2) )
 	else
@@ -44,20 +66,39 @@ function Camera_Move(camera ref as Camera, x as integer, y as integer)
 	endif
 endfunction
 
-// Speed
+/*
 
-// Set
-function Camera_SetPosition(camera ref as Camera, x as integer, y as integer)
+	TEST_FUNCTIONS
 	
+*/
+
+function Test_Camera_Utility()
+	blocksImage = LoadImage("blocks.png")
+	blocksSprite = CreateSprite(blocksImage)
+	SetSpritePositionByOffset(blocksSprite, 0, 0)
+
+	camera as Camera
+	camera = Camera_Create(0, 0, 1)
+	
+	do
+	    Print( ScreenFPS() )
+	    
+	    if(GetRawKeyState(37) = 1)
+	    		Camera_Move(camera, -1, 0)
+	    endif
+	    
+	    if(GetRawKeyState(38) = 1)
+	    		Camera_Move(camera, 0, -1)
+	    endif
+	    
+	    if(GetRawKeyState(39) = 1)
+	    		Camera_Move(camera, 1, 0)
+	    endif
+	    
+	    if(GetRawKeyState(40) = 1)
+	    		Camera_Move(camera, 0, 1)
+	    endif
+	    
+	    Sync()
+	loop
 endfunction
-
-Function Camera_Lerp(src as float, dest as float, decimal as float)
-	result as float
-	
-	if(decimal < 1.0)
-    		result = src * ( 1 - decimal ) + dest * decimal
-    	else
-    		result = dest
-    	endif
-    	
-EndFunction result

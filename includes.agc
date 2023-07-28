@@ -16,9 +16,15 @@
 #include "engine.agc"
 #include "game.agc"
 #include "helpers.agc"
+
 #include "vector.agc"
+#include "box.agc"
+
+#include "id_generator.agc"
 #include "camera.agc"
 #include "scene.agc"
 
 #include "scene_manager.agc"
 #include "input_handler.agc"
+#include "grid.agc"
+#include "grid_pathfinding.agc"
