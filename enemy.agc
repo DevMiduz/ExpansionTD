@@ -29,6 +29,16 @@
 
 */
 
+type Enemy
+	id as integer
+	position as Vector2D
+	nextPathPoint as Vector2D
+	health as float
+	speed as float
+	armour as float
+	shield as float
+endtype
+
 /*
 
 	FUNCTIONS

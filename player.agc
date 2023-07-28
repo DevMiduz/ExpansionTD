@@ -29,6 +29,11 @@
 
 */
 
+type Player
+	id as integer
+	lives as integer
+endtype
+
 /*
 
 	FUNCTIONS
