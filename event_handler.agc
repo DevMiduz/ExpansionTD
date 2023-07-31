@@ -7,7 +7,7 @@
 /*
 *	event_handler.agc
 * 	CREATED BY: DEV MIDUZ
-*	https://github.com/DevMiduz/AppGameKit_Utility
+*	https://github.com/DevMiduz/ExpansionTD
 *	devmiduz@gmail.com
 */
 

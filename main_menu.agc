@@ -5,39 +5,8 @@
  */
 
 /*
-*	player.agc
+*	main_menu.agc
 * 	CREATED BY: DEV MIDUZ
 *	https://github.com/DevMiduz/ExpansionTD
 *	devmiduz@gmail.com
 */
-
-/*
-
-	INCLUDES
-
-*/
-
-/*
-
-	CONSTANTS
-
-*/
-
-/*
-
-	TYPES
-
-*/
-
-type Player
-	id as integer
-	lives as integer
-	currency as integer
-endtype
-
-/*
-
-	FUNCTIONS
-
-*/
-
