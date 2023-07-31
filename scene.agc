@@ -25,15 +25,6 @@ type Scene
 	buttons as integer[]
 	editBoxes as integer[]
 	particles as integer[]
-	
-	sceneItems as SceneItem[]
-endtype
-
-type SceneItem
-	id as integer
-	active as integer
-	visible as integer
-	sceneItemType as integer
 endtype
 
 /*
@@ -41,229 +32,147 @@ endtype
 	FUNCTIONS
 	
 */
-
-function Scene_StoreScene(scene ref as Scene)
-	scene.sceneItems.length = -1
-	
-	Scene_CreateSpriteSceneArray(scene.sprites, scene.sceneItems)
-	Scene_CreateTextSceneArray(scene.texts, scene.sceneItems)
-	Scene_CreateButtonSceneArray(scene.buttons, scene.sceneItems)
-	Scene_CreateEditBoxSceneArray(scene.editBoxes, scene.sceneItems)
-	Scene_CreateParticleSceneArray(scene.particles, scene.sceneItems)
+function Scene_InsertSprite(scene ref as Scene, item as integer)
+	scene.sprites.insert(item)
 endfunction
 
-function Scene_DestroyScene(scene ref as Scene)
+function Scene_InsertText(scene ref as Scene, item as integer)
+	scene.texts.insert(item)
+endfunction
+
+function Scene_InsertButton(scene ref as Scene, item as integer)
+	scene.buttons.insert(item)
+endfunction
+
+function Scene_InsertEditBox(scene ref as Scene, item as integer)
+	scene.editboxes.insert(item)
+endfunction
+
+function Scene_InsertParticles(scene ref as Scene, item as integer)
+	scene.particles.insert(item)
+endfunction
+
+function Scene_RemoveSprite(scene ref as Scene, item as integer)
+	Utility_Integer_FindAndRemove(scene.sprites, item)
+endfunction
+
+function Scene_RemoveText(scene ref as Scene, item as integer)
+	Utility_Integer_FindAndRemove(scene.texts, item)
+endfunction
+
+function Scene_RemoveButton(scene ref as Scene, item as integer)
+	Utility_Integer_FindAndRemove(scene.buttons, item)
+endfunction
+
+function Scene_RemoveEditBox(scene ref as Scene, item as integer)
+	Utility_Integer_FindAndRemove(scene.editboxes, item)
+endfunction
+
+function Scene_RemoveParticles(scene ref as Scene, item as integer)
+	Utility_Integer_FindAndRemove(scene.particles, item)
+endfunction
+
+function Scene_RemoveAndDestroySprite(scene ref as Scene, item as integer)
+	Scene_RemoveSprite(scene, item)
+	if(GetSpriteExists(item)) then DeleteSprite(item)
+endfunction
+
+function Scene_RemoveAndDestroyText(scene ref as Scene, item as integer)
+	Scene_RemoveText(scene, item)
+	if(GetTextExists(item)) then DeleteText(item)
+endfunction
+
+function Scene_RemoveAndDestroyButton(scene ref as Scene, item as integer)
+	Scene_RemoveButton(scene, item)
+	if(GetVirtualButtonExists(item)) then DeleteVirtualButton(item)
+endfunction
+
+function Scene_RemoveAndDestroyEditBox(scene ref as Scene, item as integer)
+	Scene_RemoveEditBox(scene, item)
+	if(GetEditBoxExists(item)) then DeleteEditBox(item)
+endfunction
+
+function Scene_RemoveAndDestroyParticles(scene ref as Scene, item as integer)
+	Scene_RemoveParticles(scene, item)
+	if(GetParticlesExists(item)) then DeleteParticles(item)
+endfunction
+
+function Scene_Show(scene ref as Scene)
+	for i = 0 to scene.sprites.length
+		SetSpriteActive(scene.sprites[i], 1)
+		SetSpriteVisible(scene.sprites[i], 1)
+	next i
 	
-	Scene_StoreScene(scene)
+	for i = 0 to scene.texts.length
+		SetTextVisible(scene.texts[i], 1)
+	next i
 	
-	sceneItem as SceneItem
+	for i = 0 to scene.buttons.length
+		SetVirtualButtonActive(scene.buttons[i], 1)
+		SetVirtualButtonVisible(scene.buttons[i], 1)
+	next i
 	
-	for i = 0 to scene.sceneItems.length
-		sceneItem = scene.sceneItems[i]
-		
-		select(sceneItem.sceneItemType)
-			case CONST_SCENE_SPRITE_TYPE:
-				if GetSpriteExists(sceneItem.id) then DeleteSprite(sceneItem.id)
-			endcase
-			case CONST_SCENE_TEXT_TYPE:
-				if GetTextExists(sceneItem.id) then DeleteText(sceneItem.id)
-			endcase
-			case CONST_SCENE_BUTTON_TYPE:
-				//May not be suitable for all games.
-				//But logic can be used afterwards to disable a button if required.
-				if GetVirtualButtonExists(sceneItem.id) then DeleteVirtualButton(sceneItem.id)
-			endcase
-			case CONST_SCENE_EDIT_BOX_TYPE:
-				if GetEditBoxExists(sceneItem.id) then DeleteEditBox(sceneItem.id)
-			endcase
-			case CONST_SCENE_PARTICLE_TYPE:
-				if GetParticlesExists(sceneItem.id) then DeleteParticles(sceneItem.id)
-			endcase
-		endselect
+	for i = 0 to scene.editBoxes.length
+		SetEditBoxActive(scene.editBoxes[i], 1)
+		SetEditBoxVisible(scene.editBoxes[i], 1)
+	next i
+	
+	for i = 0 to scene.particles.length
+		SetParticlesActive(scene.particles[i], 1)
+		SetParticlesVisible(scene.particles[i], 1)
 	next i
 endfunction
 
-function Scene_HideScene(scene ref as Scene)
+function Scene_Hide(scene ref as Scene)
+	for i = 0 to scene.sprites.length
+		SetSpriteActive(scene.sprites[i], 0)
+		SetSpriteVisible(scene.sprites[i], 0)
+	next i
 	
-	Scene_StoreScene(scene)
+	for i = 0 to scene.texts.length
+		SetTextVisible(scene.texts[i], 0)
+	next i
 	
-	sceneItem as SceneItem
+	for i = 0 to scene.buttons.length
+		SetVirtualButtonActive(scene.buttons[i], 0)
+		SetVirtualButtonVisible(scene.buttons[i], 0)
+	next i
 	
-	for i = 0 to scene.sceneItems.length
-		sceneItem = scene.sceneItems[i]
-		
-		select(sceneItem.sceneItemType)
-			case CONST_SCENE_SPRITE_TYPE:
-				if GetSpriteExists(sceneItem.id)
-					SetSpriteVisible(sceneItem.id, 0)
-					SetSpriteActive(sceneItem.id, 0)
-				endif
-			endcase
-			case CONST_SCENE_TEXT_TYPE:
-				if GetTextExists(sceneItem.id)
-					SetTextVisible(sceneItem.id, 0)
-				endif
-			endcase
-			case CONST_SCENE_BUTTON_TYPE:
-				if GetVirtualButtonExists(sceneItem.id)
-					//May not be suitable for all games.
-					//But logic can be used afterwards to disable a button if required.
-					SetVirtualButtonActive(sceneItem.id, 0)
-					SetVirtualButtonVisible(sceneItem.id, 0)
-				endif
-			endcase
-			case CONST_SCENE_EDIT_BOX_TYPE:
-				if GetEditBoxExists(sceneItem.id)
-					SetEditBoxActive(sceneItem.id, 0)
-					SetEditBoxVisible(sceneItem.id, 0)
-				endif
-			endcase
-			case CONST_SCENE_PARTICLE_TYPE:
-				if GetParticlesExists(sceneItem.id)
-					SetParticlesActive(sceneItem.id, 0)
-					SetParticlesVisible(sceneItem.id, 0)
-				endif
-			endcase
-		endselect
+	for i = 0 to scene.editBoxes.length
+		SetEditBoxActive(scene.editBoxes[i], 0)
+		SetEditBoxVisible(scene.editBoxes[i], 0)
+	next i
+	
+	for i = 0 to scene.particles.length
+		SetParticlesActive(scene.particles[i], 0)
+		SetParticlesVisible(scene.particles[i], 0)
 	next i
 endfunction
 
-function Scene_RestoreScene(scene ref as Scene)
-	
-	sceneItem as SceneItem
-	
-	for i = 0 to scene.sceneItems.length
-		sceneItem = scene.sceneItems[i]
-		
-		select(sceneItem.sceneItemType)
-			case CONST_SCENE_SPRITE_TYPE:
-				if GetSpriteExists(sceneItem.id)
-					SetSpriteVisible(sceneItem.id, sceneItem.visible)
-					SetSpriteActive(sceneItem.id, sceneItem.active)
-				endif
-			endcase
-			case CONST_SCENE_TEXT_TYPE:
-				if GetTextExists(sceneItem.id)
-					SetTextVisible(sceneItem.id, sceneItem.visible)
-				endif
-			endcase
-			case CONST_SCENE_BUTTON_TYPE:
-				//May not be suitable for all games.
-				//But logic can be used afterwards to disable a button if required.
-				if GetVirtualButtonExists(sceneItem.id)
-					SetVirtualButtonActive(sceneItem.id, 1)
-					SetVirtualButtonVisible(sceneItem.id, 1)
-				endif
-			endcase
-			case CONST_SCENE_EDIT_BOX_TYPE:
-				if GetEditBoxExists(sceneItem.id)
-					SetEditBoxActive(sceneItem.id, sceneItem.active)
-					SetEditBoxVisible(sceneItem.id, sceneItem.visible)
-				endif
-			endcase
-			case CONST_SCENE_PARTICLE_TYPE:
-				if GetParticlesExists(sceneItem.id)
-					SetParticlesActive(sceneItem.id, sceneItem.active)
-					SetParticlesVisible(sceneItem.id, sceneItem.visible)
-				endif
-			endcase
-		endselect
+function Scene_Destroy(scene ref as Scene)
+	for i = 0 to scene.sprites.length
+		DeleteSprite(scene.sprites[i])
 	next i
-endfunction
-
-//Convert Arrays into Scene Item Arrays
-function Scene_CreateSpriteSceneArray(input as integer[], output ref as SceneItem[])
-	sceneItem as SceneItem
 	
-	for i = 0 to input.length
-		if not GetSpriteExists(input[i]) then continue
-		
-		sceneItem = Scene_CreateSpriteSceneItem(input[i])
-		output.insert(sceneItem)
+	for i = 0 to scene.texts.length
+		DeleteText(scene.texts[i])
 	next i
-endfunction
-
-function Scene_CreateTextSceneArray(input as integer[], output ref as SceneItem[])
-	sceneItem as SceneItem
 	
-	for i = 0 to input.length
-		if not GetTextExists(input[i]) then continue
-			
-		sceneItem = Scene_CreateTextSceneItem(input[i])
-		output.insert(sceneItem)
+	for i = 0 to scene.buttons.length
+		DeleteVirtualButton(scene.buttons[i])
 	next i
-endfunction
-
-function Scene_CreateEditBoxSceneArray(input as integer[], output ref as SceneItem[])
-	sceneItem as SceneItem
 	
-	for i = 0 to input.length
-		if not GetEditBoxExists(input[i]) then continue
-		
-		sceneItem = Scene_CreateEditBoxSceneItem(input[i])
-		output.insert(sceneItem)
+	for i = 0 to scene.editBoxes.length
+		DeleteEditBox(scene.editBoxes[i])
 	next i
-endfunction
-
-function Scene_CreateParticleSceneArray(input as integer[], output ref as SceneItem[])
-	sceneItem as SceneItem
 	
-	for i = 0 to input.length
-		if not GetParticlesExists(input[i]) then continue
-		
-		sceneItem = Scene_CreateParticleSceneItem(input[i])
-		output.insert(sceneItem)
+	for i = 0 to scene.particles.length
+		DeleteParticles(scene.particles[i])
 	next i
-endfunction
-
-function Scene_CreateButtonSceneArray(input as integer[], output ref as SceneItem[])
-	sceneItem as SceneItem
 	
-	for i = 0 to input.length
-		if not GetVirtualButtonExists(input[i]) then continue
-		
-		sceneItem = Scene_CreateButtonSceneItem(input[i])
-		output.insert(sceneItem)
-	next i
+	scene.sprites.length = -1
+	scene.texts.length = -1
+	scene.buttons.length = -1
+	scene.editBoxes.length = -1
+	scene.particles.length = -1
 endfunction
-
-// Create Single Scene Items
-function Scene_CreateSpriteSceneItem(item as integer)
-	sceneItem as SceneItem
-	sceneItem.id = item
-	sceneItem.active =  GetSpriteActive(item)
-	sceneItem.visible =  GetSpriteVisible(item)
-	sceneItem.sceneItemType = CONST_SCENE_SPRITE_TYPE
-endfunction sceneItem
-
-function Scene_CreateTextSceneItem(item as integer)
-	sceneItem as SceneItem
-	sceneItem.id = item
-	sceneItem.active = 1
-	sceneItem.visible =  GetTextVisible(item)
-	sceneItem.sceneItemType = CONST_SCENE_TEXT_TYPE
-endfunction sceneItem
-
-function Scene_CreateEditBoxSceneItem(item as integer)
-	sceneItem as SceneItem
-	sceneItem.id = item
-	sceneItem.active = GetEditBoxActive(item)
-	sceneItem.visible =  GetEditBoxVisible(item)
-	sceneItem.sceneItemType = CONST_SCENE_EDIT_BOX_TYPE
-endfunction sceneItem
-
-function Scene_CreateParticleSceneItem(item as integer)
-	sceneItem as SceneItem
-	sceneItem.id = item
-	sceneItem.active =  GetParticlesActive(item)
-	sceneItem.visible =  GetParticlesVisible(item)
-	sceneItem.sceneItemType = CONST_SCENE_PARTICLE_TYPE
-endfunction sceneItem
-
-function Scene_CreateButtonSceneItem(item as integer)
-	sceneItem as SceneItem
-	sceneItem.id = item
-	sceneItem.active = 1
-	sceneItem.visible = 1
-	sceneItem.sceneItemType = CONST_SCENE_BUTTON_TYPE
-endfunction sceneItem

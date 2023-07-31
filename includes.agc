@@ -25,6 +25,7 @@
 #include "scene.agc"
 #include "store.agc"
 #include "event_handler.agc"
+#include "asset_manager.agc"
 
 #include "player.agc"
 #include "enemy.agc"
@@ -33,3 +34,5 @@
 #include "input_handler.agc"
 #include "grid.agc"
 #include "grid_pathfinding.agc"
+
+#include "main_menu_scene.agc"

@@ -11,7 +11,6 @@
 *	devmiduz@gmail.com
 */
 
-
 function InitEngine()
 	
 	// show all errors
@@ -32,5 +31,4 @@ function InitEngine()
 	SetAntialiasMode(0)
 	SetDefaultMagFilter( 0 ) 
 	SetDefaultMagFilter( 0 ) 
-
 endfunction

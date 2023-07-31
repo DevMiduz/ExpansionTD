@@ -70,8 +70,18 @@ do
 loop
 */
 
-Function Lerp(src as float, dest as float, decimal as float)
+function Lerp(src as float, dest as float, decimal as float)
 	result as float
     result = src * ( 1 - decimal ) + dest * decimal
 EndFunction result
 
+function Utility_Integer_FindAndRemove(array ref as integer[], id as integer)
+	if(array.length = -1) then exitfunction -1
+	
+	//remove if any performance hit is found.
+	array.sort()
+	index = array.find(id)
+	
+	if(index <> -1) then array.remove(index)
+	
+endfunction index

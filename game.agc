@@ -18,14 +18,6 @@
 */
 
 function initGame()
+	AssetManager_LoadAssets(assetManager)
 	InputHandler_Setup()
-	
-	scene as Scene
-	/*
-	scene = TestScene_CreateSceneObject()
-	SceneManager_PushScene(scene)
-	
-	scene = TestScene2_CreateSceneObject()
-	SceneManager_PushScene(scene)
-	*/
 endfunction

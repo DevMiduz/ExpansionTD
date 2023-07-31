@@ -13,11 +13,13 @@
 
 /*
 
-	GLOBALS
+	TYPES
 	
 */
 
-global SceneManager_SceneStack as Scene[]
+type SceneManager
+	scenes as Scene[]
+endtype
 
 /*
 
@@ -25,61 +27,42 @@ global SceneManager_SceneStack as Scene[]
 	
 */
 
-function SceneManager_SyncScene()
-	if SceneManager_SceneStack.length = -1 then exitfunction
+function SceneManager_GetCurrentScene(sceneManager ref as SceneManager, scene ref as Scene)
+	if(sceneManager.scenes.length = -1) then exitfunction -1
 	
-	scene as Scene
-	scene = SceneManager_SceneStack[SceneManager_SceneStack.length]
-	
-	select scene.id
-		/*
-		case CONST_TEST_SCENE
-			test_scene_sync()
-		endcase
-		case CONST_TEST_SCENE_2
-			test_scene_2_sync()
-		endcase
-		*/
-	endselect
-	
-endfunction
+	scene = sceneManager.scenes[sceneManager.scenes.length]
+endfunction 1
 
-function SceneManager_PushScene(scene as Scene)
+function SceneManager_ChangeScene(sceneManager ref as SceneManager, scene as Scene)
+	if(sceneManager.scenes.length = -1) then exitfunction -1
 	
-	if(SceneManager_SceneStack.find(scene.id) <> -1) then exitfunction
+	current_scene as Scene
+	current_scene = sceneManager.scenes[sceneManager.scenes.length]
+	Scene_Destroy(current_scene)
 	
-	if SceneManager_SceneStack.length > -1 
+	sceneManager.scenes[sceneManager.scenes.length] = scene
+	Scene_Show(scene)
+endfunction 1
+
+function SceneManager_Push(sceneManager ref as SceneManager, scene as Scene)
+	if(sceneManager.scenes.find(scene.id) <> -1) then exitfunction
+	
+	if sceneManager.scenes.length > -1 
 		current_scene as Scene
-		current_scene = SceneManager_SceneStack[SceneManager_SceneStack.length]
-		Scene_HideScene(current_scene)
-		SceneManager_SceneStack[SceneManager_SceneStack.length] = current_scene
+		current_scene = sceneManager.scenes[sceneManager.scenes.length]
+		Scene_Hide(current_scene)
 	endif
 		
-	SceneManager_SceneStack.insert(scene)
-	
+	sceneManager.scenes.insert(scene)
 endfunction
 
-function SceneManager_PopScene()
+function SceneManager_Pop(sceneManager ref as SceneManager, scene ref as Scene)
+	if sceneManager.scenes.length = 0 then exitfunction -1
 	
-	if SceneManager_SceneStack.length = 0 then exitfunction
+	scene = sceneManager.scenes[sceneManager.scenes.length]
+	sceneManager.scenes.remove()
+	Scene_Destroy(scene)
 	
-	scene as Scene
-	scene = SceneManager_SceneStack[SceneManager_SceneStack.length]
-	SceneManager_SceneStack.remove()
-	Scene_DestroyScene(scene)
-	
-	select scene.id
-		/*
-		case CONST_TEST_SCENE
-			test_scene_cleanup()
-		endcase
-		case CONST_TEST_SCENE_2
-			test_scene_2_cleanup()
-		endcase
-		*/
-	endselect
-	
-	scene = SceneManager_SceneStack[SceneManager_SceneStack.length]
-	Scene_RestoreScene(scene)
-	SceneManager_SceneStack[SceneManager_SceneStack.length] = scene
-endfunction
+	scene = sceneManager.scenes[sceneManager.scenes.length]
+	Scene_Show(scene)
+endfunction 1

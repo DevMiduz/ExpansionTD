@@ -5,7 +5,7 @@
  */
 
 /*
-*	main.agc
+*	main_menu_scene.agc
 * 	CREATED BY: DEV MIDUZ
 *	https://github.com/DevMiduz/ExpansionTD
 *	devmiduz@gmail.com
@@ -16,8 +16,6 @@
 	INCLUDES
 
 */
-
-#include "includes.agc"
 
 /*
 
@@ -30,19 +28,27 @@
 	FUNCTIONS
 	
 */
+function MainMenuScene_CreateSceneObject()
+	
+endfunction
 
-/*
+function MainMenuScene_Setup()
+	
+endfunction
 
-	MAIN PROGRAM
+function MainMenuScene_Physics()
+	
+endfunction
 
-*/
+function MainMenuScene_Update()
+	
+endfunction
 
-InitEngine()
-InitGame()
 
-do
-    Print( ScreenFPS() )
-    
-    EventHandler_RunEvents(eventHandler)
-    Sync()
-loop
+function MainMenuScene_Draw()
+	
+endfunction
+
+function MainMenuScene_Cleanup()
+	
+endfunction

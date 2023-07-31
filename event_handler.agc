@@ -67,10 +67,11 @@ function EventHandler_PopEvent(eventHandler ref as EventHandler)
 endfunction -1
 
 function EventHandler_RunEvents(eventHandler ref as EventHandler)
-	eventId as integer
+	eventID = EventHandler_PopEvent(eventHandler)
 	
-	while (eventID = EventHandler_PopEvent(eventHandler)) <> -1
+	while (eventID) <> -1
 		EventHandler_RunEvent(eventHandler, eventID)
+		eventID = EventHandler_PopEvent(eventHandler)
 	endwhile
 endfunction
 
