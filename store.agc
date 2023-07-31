@@ -5,45 +5,32 @@
  */
 
 /*
-*	main.agc
+*	store.agc
 * 	CREATED BY: DEV MIDUZ
-*	https://github.com/DevMiduz/ExpansionTD
+*	https://github.com/DevMiduz/AppGameKit_Utility
 *	devmiduz@gmail.com
 */
 
 /*
 
-	INCLUDES
+	GLOBALS
 
 */
 
-#include "includes.agc"
+global store as Store
 
 /*
 
-	CONSTANTS
-
+	TYPES
+	
 */
+
+type Store
+	player as Player
+endtype
 
 /*
 
 	FUNCTIONS
 	
 */
-
-/*
-
-	MAIN PROGRAM
-
-*/
-
-InitEngine()
-InitGame()
-
-do
-    Print( ScreenFPS() )
-    
-    
-    EventHandler_RunEvents(eventHandler)
-    Sync()
-loop

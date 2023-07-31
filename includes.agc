@@ -23,6 +23,11 @@
 #include "id_generator.agc"
 #include "camera.agc"
 #include "scene.agc"
+#include "store.agc"
+#include "event_handler.agc"
+
+#include "player.agc"
+#include "enemy.agc"
 
 #include "scene_manager.agc"
 #include "input_handler.agc"
