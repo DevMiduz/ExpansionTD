@@ -19,5 +19,7 @@
 
 function initGame()
 	AssetManager_LoadAssets(assetManager)
-	InputHandler_Setup()
+	InputHandler_InputDataUpdate()
+	
+	SceneManager_Push(sceneManager, MainMenuScene_CreateSceneObject())
 endfunction

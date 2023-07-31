@@ -28,10 +28,10 @@ global assetManager as AssetManager
 //	GLOBALS -- IMAGES
 global ASSET_IMAGE_GUI_BUTTON_LONG_UP as integer
 global ASSET_IMAGE_GUI_BUTTON_LONG_DOWN as integer
-global ASSET_IMAGE_GUI_SOUND_BUTTON_UP as integer
-global ASSET_IMAGE_GUI_SOUND_BUTTON_DOWN as integer
-global ASSET_IMAGE_GUI_MUSIC_BUTTON_UP as integer
-global ASSET_IMAGE_GUI_MUSIC_BUTTON_DOWN as integer
+global ASSET_IMAGE_GUI_SOUND_ENABLED_BUTTON as integer
+global ASSET_IMAGE_GUI_SOUND_DISABLED_BUTTON as integer
+global ASSET_IMAGE_GUI_MUSIC_ENABLED_BUTTON as integer
+global ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON as integer
 
 //	GLOBALS -- SOUNDS
 
@@ -76,17 +76,17 @@ function AssetManager_LoadImages(assetManager ref as AssetManager)
 	ASSET_IMAGE_GUI_BUTTON_LONG_DOWN = LoadImage("GUI/long_button_down.png")
 	assetManager.images.insert(ASSET_IMAGE_GUI_BUTTON_LONG_DOWN)
 	
-	ASSET_IMAGE_GUI_SOUND_BUTTON_UP = LoadImage("GUI/sound_button1.png")
-	assetManager.images.insert(ASSET_IMAGE_GUI_SOUND_BUTTON_UP)
+	ASSET_IMAGE_GUI_SOUND_ENABLED_BUTTON = LoadImage("GUI/sound_button1.png")
+	assetManager.images.insert(ASSET_IMAGE_GUI_SOUND_ENABLED_BUTTON)
 	
-	ASSET_IMAGE_GUI_SOUND_BUTTON_DOWN = LoadImage("GUI/sound_button2.png")
-	assetManager.images.insert(ASSET_IMAGE_GUI_SOUND_BUTTON_DOWN)
+	ASSET_IMAGE_GUI_SOUND_DISABLED_BUTTON = LoadImage("GUI/sound_button2.png")
+	assetManager.images.insert(ASSET_IMAGE_GUI_SOUND_DISABLED_BUTTON)
 	
-	ASSET_IMAGE_GUI_MUSIC_BUTTON_UP = LoadImage("GUI/music_button1.png")
-	assetManager.images.insert(ASSET_IMAGE_GUI_MUSIC_BUTTON_UP)
+	ASSET_IMAGE_GUI_MUSIC_ENABLED_BUTTON = LoadImage("GUI/music_button1.png")
+	assetManager.images.insert(ASSET_IMAGE_GUI_MUSIC_ENABLED_BUTTON)
 	
-	ASSET_IMAGE_GUI_MUSIC_BUTTON_DOWN = LoadImage("GUI/music_button2.png")
-	assetManager.images.insert(ASSET_IMAGE_GUI_MUSIC_BUTTON_DOWN)
+	ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON = LoadImage("GUI/music_button2.png")
+	assetManager.images.insert(ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON)
 endfunction
 
 function AssetManager_LoadSounds(assetManager ref as AssetManager)

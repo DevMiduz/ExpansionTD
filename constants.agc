@@ -26,7 +26,7 @@
 */
 
 // Engine Constants
-#constant CONST_GAME_TITLE = "Base Project"
+#constant CONST_GAME_TITLE = "Expansion TD"
 #constant CONST_ERROR_MODE = 2
 #constant CONST_RESIZE_ALLOWED = 1
 #constant CONST_WINDOW_WIDTH = 1920
@@ -47,10 +47,6 @@
 #constant CONST_SCENE_BUTTON_TYPE = 2
 #constant CONST_SCENE_EDIT_BOX_TYPE = 3
 #constant CONST_SCENE_PARTICLE_TYPE = 4
-
-// Scene Manager Constants
-#constant CONST_MAIN_MENU_SCENE = 0
-#constant CONST_TEST_SCENE_2 = 1
 
 // Event ID Constants
 #constant CONST_GAME_STARTED_EVENT_ID = 0

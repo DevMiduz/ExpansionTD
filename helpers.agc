@@ -75,7 +75,7 @@ function Lerp(src as float, dest as float, decimal as float)
     result = src * ( 1 - decimal ) + dest * decimal
 EndFunction result
 
-function Utility_Integer_FindAndRemove(array ref as integer[], id as integer)
+function Array_Integer_FindAndRemove(array ref as integer[], id as integer)
 	if(array.length = -1) then exitfunction -1
 	
 	//remove if any performance hit is found.
@@ -85,3 +85,35 @@ function Utility_Integer_FindAndRemove(array ref as integer[], id as integer)
 	if(index <> -1) then array.remove(index)
 	
 endfunction index
+
+function Button_EventTest(upSprite as integer, downSprite as integer)
+	if(GetSpriteHitTest(upSprite, InputHandler_Data.pointerPosX, InputHandler_Data.pointerPosY) = 1)
+		if(InputHandler_Data.pointer = CONST_INPUT_PRESSED or InputHandler_Data.pointer = CONST_INPUT_HELD)
+			SetSpriteVisible(downSprite, 1)
+			SetSpriteVisible(upSprite, 0)
+			exitfunction 0
+		elseif(InputHandler_Data.pointer = CONST_INPUT_RELEASED)
+			SetSpriteVisible(downSprite, 0)
+			SetSpriteVisible(upSprite, 1)
+			exitfunction 1
+		endif
+	elseif(GetSpriteVisible(downSprite) = 1)
+			SetSpriteVisible(downSprite, 0)
+			SetSpriteVisible(upSprite, 1)
+			exitfunction 0
+	endif
+endfunction -1
+
+function Button_ToggleEventTest(enabledSprite as integer, disabledSprite as integer)
+	if(GetSpriteHitTest(enabledSprite, InputHandler_Data.pointerPosX, InputHandler_Data.pointerPosY) = 1 and InputHandler_Data.pointer = CONST_INPUT_PRESSED)
+		if(GetSpriteVisible(enabledSprite) = 1)
+			SetSpriteVisible(enabledSprite, 0)
+			SetSpriteVisible(disabledSprite, 1)
+			exitfunction 0
+		else
+			SetSpriteVisible(enabledSprite, 1)
+			SetSpriteVisible(disabledSprite, 0)
+			exitfunction 1
+		endif
+	endif
+endfunction -1

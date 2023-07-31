@@ -13,6 +13,14 @@
 
 /*
 
+	GLOBALS
+
+*/
+
+global sceneManager as SceneManager
+
+/*
+
 	TYPES
 	
 */
@@ -65,4 +73,17 @@ function SceneManager_Pop(sceneManager ref as SceneManager, scene ref as Scene)
 	
 	scene = sceneManager.scenes[sceneManager.scenes.length]
 	Scene_Show(scene)
+endfunction 1
+
+function SceneManager_Sync(sceneManager ref as SceneManager)
+	scene as Scene
+	
+	if(SceneManager_GetCurrentScene(SceneManager, scene) = -1) then exitfunction -1
+	
+	select scene.id
+		case MainMenuScene_ID:
+			MainMenuScene_Sync()
+		endcase
+	endselect
+	
 endfunction 1

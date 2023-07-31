@@ -53,23 +53,23 @@ function Scene_InsertParticles(scene ref as Scene, item as integer)
 endfunction
 
 function Scene_RemoveSprite(scene ref as Scene, item as integer)
-	Utility_Integer_FindAndRemove(scene.sprites, item)
+	Array_Integer_FindAndRemove(scene.sprites, item)
 endfunction
 
 function Scene_RemoveText(scene ref as Scene, item as integer)
-	Utility_Integer_FindAndRemove(scene.texts, item)
+	Array_Integer_FindAndRemove(scene.texts, item)
 endfunction
 
 function Scene_RemoveButton(scene ref as Scene, item as integer)
-	Utility_Integer_FindAndRemove(scene.buttons, item)
+	Array_Integer_FindAndRemove(scene.buttons, item)
 endfunction
 
 function Scene_RemoveEditBox(scene ref as Scene, item as integer)
-	Utility_Integer_FindAndRemove(scene.editboxes, item)
+	Array_Integer_FindAndRemove(scene.editboxes, item)
 endfunction
 
 function Scene_RemoveParticles(scene ref as Scene, item as integer)
-	Utility_Integer_FindAndRemove(scene.particles, item)
+	Array_Integer_FindAndRemove(scene.particles, item)
 endfunction
 
 function Scene_RemoveAndDestroySprite(scene ref as Scene, item as integer)

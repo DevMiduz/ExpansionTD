@@ -42,7 +42,8 @@ InitGame()
 
 do
     Print( ScreenFPS() )
-    
+    InputHandler_InputDataUpdate()
+    SceneManager_Sync(sceneManager)
     EventHandler_RunEvents(eventHandler)
     Sync()
 loop
