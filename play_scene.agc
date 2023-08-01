@@ -69,5 +69,11 @@ function PlayScene_Sync()
 		endcase
 	endselect
 	
-	 
+	// INPUT HANDLING
+	
+	
+	// GAME CONTEXT UPDATE AND DRAW
+	GameContext_Update(gameContext)
+	GameContext_Draw(gameContext)
+	
 endfunction
