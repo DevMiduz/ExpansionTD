@@ -26,9 +26,11 @@
 
 */
 
+/*
 #constant TILE_OPEN = 0
 #constant TILE_CLOSED = 1
 #constant TILE_IMPASSIBLE = 2
+*/
 
 
 /*
@@ -62,7 +64,7 @@ function GridPathfinding_UpdatePathDistances(grid ref as Grid, tileDataArray ref
 	
 	GridPathfinding_GetTileData(tileDataArray, currentTileData, startTile.id)
 	
-	if(currentTileData.status <> TILE_OPEN) then exitfunction
+	if(currentTileData.status <> CONST_MAP_TERRAIN_TYPE_OPEN) then exitfunction
 	
 	currentTileData.distance = 0
 	GridPathfinding_InsertOrUpdateTileData(tileDataArray, currentTileData)
@@ -149,18 +151,36 @@ endfunction
 */
 
 function GridPathfinding_InitTileData(grid ref as Grid, tileDataArray ref as TileData[])
+	tileData as TileData
+	position as Vector2D
 	tile as Tile
 	row as Row
+	scene as Scene
+	
+	SceneManager_GetCurrentScene(sceneManager, scene)
 	
 	for rowIndex = 0 to grid.rows.length
 		row = grid.rows[rowIndex]
 		for colIndex = 0 to row.tiles.length
 			tile = row.tiles[colIndex]
-			tileDataArray.insert(TileData_Create(tile.id, TILE_OPEN, -1))
+			tileData = TileData_Create(tile.id, Map_GetRandomTileType(), -1)
+			
+			if(tileData.sprite <= 0)
+				tileData.sprite = Map_CreateTileTerrainSprite(tileData.status)
+				Scene_InsertSprite(scene, tileData.sprite)
+			endif
+			
+			
+			position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
+			SetSpritePosition(tileData.sprite, position.x, position.y)
+			tileDataArray.insert(tileData)
 		next colIndex
 	next rowIndex
 	
 	tileDataArray.sort()
+	
+	SceneManager_UpdateCurrentScene(sceneManager, scene)
+	
 endfunction
 
 function GridPathfinding_GetTileData(tileDataArray ref as TileData[], tileData ref as TileData, id as integer)
@@ -210,11 +230,20 @@ function GridPathfinding_ResetTileDataDistances(tileDataArray ref as TileData[])
 endfunction
 
 function GridPathfinding_IsTileOpen(tileData ref as TileData)
-	if(tileData.status = TILE_OPEN) then exitfunction 1
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_OPEN) then exitfunction 1
+endfunction -1
+
+function GridPathfinding_IsTileOccupied(tileData ref as TileData)
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_OCCUPIED) then exitfunction 1
+endfunction -1
+
+
+function GridPathfinding_IsTileBuildable(tileData ref as TileData)
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_BUILDABLE) then exitfunction 1
 endfunction -1
 
 function GridPathfinding_IsTileImpassible(tileData ref as TileData)
-	if(tileData.status = TILE_IMPASSIBLE) then exitfunction 1
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_IMPASSIBLE) then exitfunction 1
 endfunction -1
 
 function GridPathfinding_HasTileBeenVisited(tileId as integer, grid ref as Grid, visited ref as integer[])	
@@ -254,6 +283,7 @@ function GridPathfinding_DrawGrid(grid ref as Grid, tileDataArray ref as TileDat
 			tile = Grid_GetTileFromGridIndex(grid, Vector2D_CreateVector(colIndex, rowIndex))
 			GridPathfinding_GetTileData(tileDataArray, tileData, tile.id)
 			
+			/*
 			if(tileData.status = TILE_OPEN)
 				color = MakeColor( 255, 255, 255 )
 			elseif(tileData.status = TILE_CLOSED)
@@ -261,10 +291,11 @@ function GridPathfinding_DrawGrid(grid ref as Grid, tileDataArray ref as TileDat
 			elseif(tileData.status = TILE_IMPASSIBLE)
 				color = MakeColor( 255, 0, 0 )
 			endif
+			*/
 			
 			
 			position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
-			DrawBox(WorldToScreenX(position.x), WorldToScreenY(position.y), WorldToScreenX(position.x + grid.tileSize), WorldToScreenY(position.y + grid.tileSize), color, color, color, color, 0)
+			//DrawBox(WorldToScreenX(position.x), WorldToScreenY(position.y), WorldToScreenX(position.x + grid.tileSize), WorldToScreenY(position.y + grid.tileSize), color, color, color, color, 0)
 			
 			/*
 			if(GetTextExists(tileData.distanceText) = 0)

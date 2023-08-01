@@ -42,6 +42,12 @@ function SceneManager_GetCurrentScene(sceneManager ref as SceneManager, scene re
 	scene = sceneManager.scenes[sceneManager.scenes.length]
 endfunction 1
 
+function SceneManager_UpdateCurrentScene(sceneManager ref as SceneManager, scene as Scene)
+	if(sceneManager.scenes.length = -1) then exitfunction -1
+	
+	sceneManager.scenes[sceneManager.scenes.length] = scene
+endfunction 1
+
 function SceneManager_StoreNextScene(sceneManager ref as SceneManager, scene as Scene)
 	SceneManager.nextScene = scene
 endfunction

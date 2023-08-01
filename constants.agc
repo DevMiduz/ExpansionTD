@@ -48,6 +48,16 @@
 #constant CONST_SCENE_EDIT_BOX_TYPE = 3
 #constant CONST_SCENE_PARTICLE_TYPE = 4
 
+// Map Terrain Types
+#constant CONST_MAP_TERRAIN_TYPE_OPEN = 0
+#constant CONST_MAP_TERRAIN_TYPE_BUILDABLE = 1	// But not pathable
+#constant CONST_MAP_TERRAIN_TYPE_IMPASSIBLE = 2
+#constant CONST_MAP_TERRAIN_TYPE_OCCUPIED = 3		// No sprite -> used for tiles which are occupied
+
+// Map Terrain Types Chances
+#constant CONST_MAP_TERRAIN_TYPE_BUILDABLE_CHANCE = 10 	// Higher is worse.
+#constant CONST_MAP_TERRAIN_TYPE_IMPASSIBLE_CHANCE = 20	// Higher is worse.
+
 // Event ID Constants
 #constant CONST_GAME_STARTED_EVENT_ID = 0
 #constant CONST_GAME_PAUSED_EVENT_ID = 1

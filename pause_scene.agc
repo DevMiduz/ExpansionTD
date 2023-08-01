@@ -194,7 +194,7 @@ function PauseScene_Sync()
 	// BUTTON HANDLING
 	select(Button_EventTest(PauseScene_Sprite_ResumeButtonUp, PauseScene_Sprite_ResumeButtonDown))
 		case 1:
-			EventHandler_PushEvent(eventHandler, CONST_POP_SCENE_EVENT_ID)
+			EventHandler_PushEvent(eventHandler, CONST_GAME_RESUMED_EVENT_ID)
 		endcase
 	endselect
 	
@@ -203,9 +203,7 @@ function PauseScene_Sync()
 			GameContext_Cleanup(gameContext)
 			GameContext_Init(gameContext)
 			
-			EventHandler_PushEvent(eventHandler, CONST_POP_SCENE_EVENT_ID)
-			SceneManager_StoreNextScene(sceneManager, PlayScene_CreateSceneObject())
-			EventHandler_PushEvent(eventHandler, CONST_NEXT_SCENE_EVENT_ID)
+			EventHandler_PushEvent(eventHandler, CONST_GAME_RESTARTED_EVENT_ID)
 		endcase
 	endselect
 	
@@ -215,9 +213,8 @@ function PauseScene_Sync()
 			GameContext_Cleanup(gameContext)
 			GameContext_Init(gameContext)
 			
-			EventHandler_PushEvent(eventHandler, CONST_POP_SCENE_EVENT_ID)
-			SceneManager_StoreNextScene(sceneManager,	MainMenuScene_CreateSceneObject())
-			EventHandler_PushEvent(eventHandler, CONST_NEXT_SCENE_EVENT_ID)
+			EventHandler_PushEvent(eventHandler, CONST_GAME_STOPPED_EVENT_ID)
+			
 		endcase
 	endselect
 	

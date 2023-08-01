@@ -29,6 +29,7 @@
 #include "audio_manager.agc"
 
 #include "game_context.agc"
+#include "map.agc"
 #include "player.agc"
 #include "enemy.agc"
 

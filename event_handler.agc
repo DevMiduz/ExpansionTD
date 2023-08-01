@@ -148,19 +148,28 @@ function EventHandler_GameStartedEvent()
 endfunction
 
 function EventHandler_GamePausedEvent()
-	
+	SceneManager_Push(sceneManager, PauseScene_CreateSceneObject())
 endfunction
 
 function EventHandler_GameResumedEvent()
-	
+	scene as Scene
+	SceneManager_Pop(sceneManager, scene)
 endfunction
 
 function EventHandler_GameStoppedEvent()
+	GameContext_Cleanup(gameContext)
 	
+	scene as Scene
+	SceneManager_Pop(sceneManager, scene)
+	SceneManager_ChangeScene(sceneManager, MainMenuScene_CreateSceneObject())
 endfunction
 
 function EventHandler_GameRestartedEvent()
+	GameContext_Cleanup(gameContext)
 	
+	scene as Scene
+	SceneManager_Pop(sceneManager, scene)
+	SceneManager_ChangeScene(sceneManager, PlayScene_CreateSceneObject())
 endfunction
 
 function EventHandler_GameOverEvent()

@@ -65,7 +65,7 @@ function PlayScene_Sync()
 	// BUTTON HANDLING
 	select(Button_EventTest(PlayScene_Sprite_PauseButtonUp, PlayScene_Sprite_PauseButtonDown))
 		case 1:
-			SceneManager_Push(sceneManager, PauseScene_CreateSceneObject())
+			EventHandler_PushEvent(eventHandler, CONST_GAME_PAUSED_EVENT_ID)
 		endcase
 	endselect
 	
