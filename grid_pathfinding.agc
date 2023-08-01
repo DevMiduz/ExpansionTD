@@ -266,13 +266,16 @@ function GridPathfinding_DrawGrid(grid ref as Grid, tileDataArray ref as TileDat
 			position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
 			DrawBox(WorldToScreenX(position.x), WorldToScreenY(position.y), WorldToScreenX(position.x + grid.tileSize), WorldToScreenY(position.y + grid.tileSize), color, color, color, color, 0)
 			
+			/*
 			if(GetTextExists(tileData.distanceText) = 0)
 				tileData.distanceText = CreateText(str(tileData.distance))
 			endif
 			
+			
 			SetTextString(tileData.distanceText, str(tileData.distance))
 			SetTextPosition(tileData.distanceText, position.x, position.y)
 			GridPathfinding_InsertOrUpdateTileData(tileDataArray, tileData)
+			*/
 			
 		next colIndex
 	next rowIndex

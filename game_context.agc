@@ -66,11 +66,12 @@ function GameContext_Init(gameContext ref as GameContext)
 endfunction
 
 function GameContext_Update(gameContext ref as GameContext)
-	
+	// Update Camera
+	Camera_Update(GameContext.camera)
 endfunction
 
 function GameContext_Draw(gameContext ref as GameContext)
-	GridPathfinding_DebugTileData(gameContext.tileDataArray)
+	GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
 endfunction
 
 

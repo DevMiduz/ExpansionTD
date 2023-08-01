@@ -15,17 +15,17 @@ function InitEngine()
 	
 	// show all errors
 	
-	SetErrorMode(2)
+	SetErrorMode(CONST_ERROR_MODE)
 	
 	// set window properties
-	SetWindowTitle( "ExpandingGrid" )
-	SetWindowSize( 1920, 1080, 0 )
-	SetWindowAllowResize( 1 ) // allow the user to resize the window
+	SetWindowTitle(CONST_GAME_TITLE)
+	SetWindowSize( CONST_WINDOW_WIDTH, CONST_WINDOW_HEIGHT, 0 )
+	SetWindowAllowResize( CONST_RESIZE_ALLOWED ) // allow the user to resize the window
 	
 	// set display properties
-	SetVirtualResolution( 160, 88 ) // doesn't have to match the window
+	SetVirtualResolution( CONST_VIRTUAL_WIDTH, CONST_VIRTUAL_HEIGHT ) // doesn't have to match the window
 	SetOrientationAllowed( 1, 1, 1, 1 ) // allow both portrait and landscape on mobile devices
-	SetSyncRate( 60, 0 ) // 30fps instead of 60 to save battery
+	SetSyncRate( CONST_SYNC_RATE, 0 ) // 30fps instead of 60 to save battery
 	SetScissor( 0,0,0,0 ) // use the maximum available screen space, no black borders
 	UseNewDefaultFonts( 1 )
 	SetAntialiasMode(0)

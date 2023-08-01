@@ -57,19 +57,22 @@ function PauseScene_CreateSceneObject()
 	SetTextFont(PauseScene_Text_Title, ASSET_FONT_BOLD_FONT)
 	SetTextAlignment(PauseScene_Text_Title, 1)
 	SetTextPosition(PauseScene_Text_Title, GetVirtualWidth() / 2, 2)
-	SetTextSize(PauseScene_Text_Title, 10)
+	FixTextToScreen(PauseScene_Text_Title, 1)
+	SetTextSize(PauseScene_Text_Title, 16)
 	Scene_InsertText(scene, PauseScene_Text_Title)
 	
 	// Create Resume Button Up Sprite
 	PauseScene_Sprite_ResumeButtonUp = CreateSprite(ASSET_IMAGE_GUI_BUTTON_LONG_UP)
-	SetSpritePositionByOffset(PauseScene_Sprite_ResumeButtonUp, GetVirtualWidth() / 2, 24)
-	SetSpriteSize(PauseScene_Sprite_ResumeButtonUp, 48, 12)
+	SetSpritePositionByOffset(PauseScene_Sprite_ResumeButtonUp, GetVirtualWidth() / 2, 48)
+	SetSpriteSize(PauseScene_Sprite_ResumeButtonUp, 96, 24)
+	FixSpriteToScreen(PauseScene_Sprite_ResumeButtonUp, 1)
 	Scene_InsertSprite(scene, PauseScene_Sprite_ResumeButtonUp)
 	
 	// Create Resume Button Down Sprite
 	PauseScene_Sprite_ResumeButtonDown = CreateSprite(ASSET_IMAGE_GUI_BUTTON_LONG_DOWN)
-	SetSpritePositionByOffset(PauseScene_Sprite_ResumeButtonDown, GetVirtualWidth() / 2, 24)
-	SetSpriteSize(PauseScene_Sprite_ResumeButtonDown, 48, 12)
+	SetSpritePositionByOffset(PauseScene_Sprite_ResumeButtonDown, GetVirtualWidth() / 2, 48)
+	SetSpriteSize(PauseScene_Sprite_ResumeButtonDown, 96, 24)
+	FixSpriteToScreen(PauseScene_Sprite_ResumeButtonDown, 1)
 	SetSpriteVisible(PauseScene_Sprite_ResumeButtonDown, 0)
 	Scene_InsertSprite(scene, PauseScene_Sprite_ResumeButtonDown)
 	
@@ -77,68 +80,77 @@ function PauseScene_CreateSceneObject()
 	PauseScene_Text_Resume= CreateText("Resume")
 	SetTextFont(PauseScene_Text_Resume, ASSET_FONT_REGULAR_FONT)
 	SetTextAlignment(PauseScene_Text_Resume, 1)
-	SetTextPosition(PauseScene_Text_Resume, GetVirtualWidth() / 2, 20)
+	SetTextPosition(PauseScene_Text_Resume, GetVirtualWidth() / 2, 40)
 	SetTextDepth(PauseScene_Text_Resume, 0)
 	SetTextColor(PauseScene_Text_Resume, 255, 255, 255, 255)
-	SetTextSize(PauseScene_Text_Resume, 8)
+	SetTextSize(PauseScene_Text_Resume, 14)
+	FixTextToScreen(PauseScene_Text_Resume, 1)
 	Scene_InsertText(scene, PauseScene_Text_Resume)
 	
 	// Create Restart Button Up Sprite
 	PauseScene_Sprite_RestartButtonUp = CreateSprite(ASSET_IMAGE_GUI_BUTTON_LONG_UP)
-	SetSpritePositionByOffset(PauseScene_Sprite_RestartButtonUp, GetVirtualWidth() / 2, 48)
-	SetSpriteSize(PauseScene_Sprite_RestartButtonUp, 48, 12)
+	SetSpritePositionByOffset(PauseScene_Sprite_RestartButtonUp, GetVirtualWidth() / 2, 96)
+	SetSpriteSize(PauseScene_Sprite_RestartButtonUp, 96, 24)
+	FixSpriteToScreen(PauseScene_Sprite_RestartButtonUp, 1)
 	Scene_InsertSprite(scene, PauseScene_Sprite_RestartButtonUp)
 	
 	// Create Restart Button Down Sprite
 	PauseScene_Sprite_RestartButtonDown = CreateSprite(ASSET_IMAGE_GUI_BUTTON_LONG_DOWN)
-	SetSpritePositionByOffset(PauseScene_Sprite_RestartButtonDown, GetVirtualWidth() / 2, 48)
-	SetSpriteSize(PauseScene_Sprite_RestartButtonDown, 48, 12)
+	SetSpritePositionByOffset(PauseScene_Sprite_RestartButtonDown, GetVirtualWidth() / 2, 96)
+	SetSpriteSize(PauseScene_Sprite_RestartButtonDown, 96, 24)
 	SetSpriteVisible(PauseScene_Sprite_RestartButtonDown, 0)
+	FixSpriteToScreen(PauseScene_Sprite_RestartButtonDown, 1)
 	Scene_InsertSprite(scene, PauseScene_Sprite_RestartButtonDown)
 	
 	// Create Restart Button Text
 	PauseScene_Text_Restart = CreateText("Restart")
 	SetTextFont(PauseScene_Text_Restart, ASSET_FONT_REGULAR_FONT)
 	SetTextAlignment(PauseScene_Text_Restart, 1)
-	SetTextPosition(PauseScene_Text_Restart, GetVirtualWidth() / 2, 44)
+	SetTextPosition(PauseScene_Text_Restart, GetVirtualWidth() / 2, 88)
 	SetTextDepth(PauseScene_Text_Restart, 0)
 	SetTextColor(PauseScene_Text_Restart, 255, 255, 255, 255)
-	SetTextSize(PauseScene_Text_Restart, 8)
+	SetTextSize(PauseScene_Text_Restart, 14)
+	FixTextToScreen(PauseScene_Text_Restart, 1)
 	Scene_InsertText(scene, PauseScene_Text_Restart)
 	
 	// Create Exit Button Up Sprite
 	PauseScene_Sprite_ExitButtonUp = CreateSprite(ASSET_IMAGE_GUI_BUTTON_LONG_UP)
-	SetSpritePositionByOffset(PauseScene_Sprite_ExitButtonUp, GetVirtualWidth() / 2, 72)
-	SetSpriteSize(PauseScene_Sprite_ExitButtonUp, 48, 12)
+	SetSpritePositionByOffset(PauseScene_Sprite_ExitButtonUp, GetVirtualWidth() / 2, 144)
+	SetSpriteSize(PauseScene_Sprite_ExitButtonUp, 96, 24)
+	FixSpriteToScreen(PauseScene_Sprite_ExitButtonUp, 1)
 	Scene_InsertSprite(scene, PauseScene_Sprite_ExitButtonUp)
 	
 	// Create Exit Button Down Sprite
 	PauseScene_Sprite_ExitButtonDown = CreateSprite(ASSET_IMAGE_GUI_BUTTON_LONG_DOWN)
-	SetSpritePositionByOffset(PauseScene_Sprite_ExitButtonDown, GetVirtualWidth() / 2, 72)
-	SetSpriteSize(PauseScene_Sprite_ExitButtonDown, 48, 12)
+	SetSpritePositionByOffset(PauseScene_Sprite_ExitButtonDown, GetVirtualWidth() / 2, 144)
+	SetSpriteSize(PauseScene_Sprite_ExitButtonDown, 96, 24)
 	SetSpriteVisible(PauseScene_Sprite_ExitButtonDown, 0)
+	FixSpriteToScreen(PauseScene_Sprite_ExitButtonDown, 1)
 	Scene_InsertSprite(scene, PauseScene_Sprite_ExitButtonDown)
 	
 	// Create About Button Text
 	PauseScene_Text_Exit = CreateText("Exit")
 	SetTextFont(PauseScene_Text_Exit, ASSET_FONT_REGULAR_FONT)
 	SetTextAlignment(PauseScene_Text_Exit, 1)
-	SetTextPosition(PauseScene_Text_Exit, GetVirtualWidth() / 2, 68)
+	SetTextPosition(PauseScene_Text_Exit, GetVirtualWidth() / 2, 136)
 	SetTextDepth(PauseScene_Text_Exit, 0)
 	SetTextColor(PauseScene_Text_Exit, 255, 255, 255, 255)
-	SetTextSize(PauseScene_Text_Exit, 8)
+	SetTextSize(PauseScene_Text_Exit, 14)
+	FixTextToScreen(PauseScene_Text_Exit, 1)
 	Scene_InsertText(scene, PauseScene_Text_Exit)
 	
 	// Create Sound Enabled Button
 	PauseScene_Sprite_SoundEnabledButton = CreateSprite(ASSET_IMAGE_GUI_SOUND_ENABLED_BUTTON)
-	SetSpritePositionByOffset(PauseScene_Sprite_SoundEnabledButton, GetVirtualWidth() - 8, 8)
-	SetSpriteSize(PauseScene_Sprite_SoundEnabledButton, 14, 14)
+	SetSpritePositionByOffset(PauseScene_Sprite_SoundEnabledButton, GetVirtualWidth() - 16, 16)
+	SetSpriteSize(PauseScene_Sprite_SoundEnabledButton, 22, 22)
+	FixSpriteToScreen(PauseScene_Sprite_SoundEnabledButton, 1)
 	Scene_InsertSprite(scene, PauseScene_Sprite_SoundEnabledButton)
 	
 	// Create Sound Disabled Button
 	PauseScene_Sprite_SoundDisabledButton = CreateSprite(ASSET_IMAGE_GUI_SOUND_DISABLED_BUTTON)
-	SetSpritePositionByOffset(PauseScene_Sprite_SoundDisabledButton, GetVirtualWidth() - 8, 8)
-	SetSpriteSize(PauseScene_Sprite_SoundDisabledButton, 14, 14)
+	SetSpritePositionByOffset(PauseScene_Sprite_SoundDisabledButton, GetVirtualWidth() - 16, 16)
+	SetSpriteSize(PauseScene_Sprite_SoundDisabledButton, 22, 22)
+	FixSpriteToScreen(PauseScene_Sprite_SoundDisabledButton, 1)
 	Scene_InsertSprite(scene, PauseScene_Sprite_SoundDisabledButton)
 	
 	if(AudioManager.soundEnabled = 1)
@@ -152,14 +164,16 @@ function PauseScene_CreateSceneObject()
 	
 	// Create Music Enabled Button
 	PauseScene_Sprite_MusicEnabledButton = CreateSprite(ASSET_IMAGE_GUI_MUSIC_ENABLED_BUTTON)
-	SetSpritePositionByOffset(PauseScene_Sprite_MusicEnabledButton, GetVirtualWidth() - 24, 8)
-	SetSpriteSize(PauseScene_Sprite_MusicEnabledButton, 14, 14)
+	SetSpritePositionByOffset(PauseScene_Sprite_MusicEnabledButton, GetVirtualWidth() - 42, 16)
+	SetSpriteSize(PauseScene_Sprite_MusicEnabledButton, 22, 22)
+	FixSpriteToScreen(PauseScene_Sprite_MusicEnabledButton, 1)
 	Scene_InsertSprite(scene, PauseScene_Sprite_MusicEnabledButton)
 	
 	// Create Music Disabled Button
 	PauseScene_Sprite_MusicDisabledButton = CreateSprite(ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON)
-	SetSpritePositionByOffset(PauseScene_Sprite_MusicDisabledButton, GetVirtualWidth() - 24, 8)
-	SetSpriteSize(PauseScene_Sprite_MusicDisabledButton, 14, 14)
+	SetSpritePositionByOffset(PauseScene_Sprite_MusicDisabledButton, GetVirtualWidth() - 42, 16)
+	SetSpriteSize(PauseScene_Sprite_MusicDisabledButton, 22, 22)
+	FixSpriteToScreen(PauseScene_Sprite_MusicDisabledButton, 1)
 	
 	if(AudioManager.musicEnabled = 1)
 		SetSpriteVisible(PauseScene_Sprite_MusicDisabledButton, 0)
@@ -172,12 +186,11 @@ function PauseScene_CreateSceneObject()
 	
 	Scene_InsertSprite(scene, PauseScene_Sprite_MusicDisabledButton)
 	
-	SetViewOffset(0,0)
 	
 endfunction scene
 
 function PauseScene_Sync()
-	
+
 	// BUTTON HANDLING
 	select(Button_EventTest(PauseScene_Sprite_ResumeButtonUp, PauseScene_Sprite_ResumeButtonDown))
 		case 1:

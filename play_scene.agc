@@ -43,16 +43,16 @@ function PlayScene_CreateSceneObject()
 	
 	// Create Pause Button Up Sprite
 	PlayScene_Sprite_PauseButtonUp = CreateSprite(ASSET_IMAGE_GUI_PAUSE_UP_BUTTON)
-	SetSpritePositionByOffset(PlayScene_Sprite_PauseButtonUp, GetVirtualWidth() - 8, 8)
+	SetSpritePositionByOffset(PlayScene_Sprite_PauseButtonUp, GetVirtualWidth() - 16, 16)
 	FixSpriteToScreen(PlayScene_Sprite_PauseButtonUp, 1)
-	SetSpriteSize(PlayScene_Sprite_PauseButtonUp, 14, 14)
+	SetSpriteSize(PlayScene_Sprite_PauseButtonUp, 22, 22)
 	Scene_InsertSprite(scene, PlayScene_Sprite_PauseButtonUp)
 	
 	// Create Pause Button Down Sprite
 	PlayScene_Sprite_PauseButtonDown = CreateSprite(ASSET_IMAGE_GUI_PAUSE_DOWN_BUTTON)
-	SetSpritePositionByOffset(PlayScene_Sprite_PauseButtonDown, GetVirtualWidth() - 8, 8)
+	SetSpritePositionByOffset(PlayScene_Sprite_PauseButtonDown, GetVirtualWidth() - 16, 16)
 	FixSpriteToScreen(PlayScene_Sprite_PauseButtonDown, 1)
-	SetSpriteSize(PlayScene_Sprite_PauseButtonDown, 14, 14)
+	SetSpriteSize(PlayScene_Sprite_PauseButtonDown, 22, 22)
 	SetSpriteVisible(PlayScene_Sprite_PauseButtonDown, 0)
 	Scene_InsertSprite(scene, PlayScene_Sprite_PauseButtonDown)
 	
