@@ -32,6 +32,8 @@ global ASSET_IMAGE_GUI_SOUND_ENABLED_BUTTON as integer
 global ASSET_IMAGE_GUI_SOUND_DISABLED_BUTTON as integer
 global ASSET_IMAGE_GUI_MUSIC_ENABLED_BUTTON as integer
 global ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON as integer
+global ASSET_IMAGE_GUI_PAUSE_DOWN_BUTTON as integer
+global ASSET_IMAGE_GUI_PAUSE_UP_BUTTON as integer
 
 //	GLOBALS -- SOUNDS
 global ASSET_SOUND_SELECT_SOUND_1 as integer
@@ -93,6 +95,12 @@ function AssetManager_LoadImages(assetManager ref as AssetManager)
 	
 	ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON = LoadImage("GUI/music_button2.png")
 	assetManager.images.insert(ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON)
+	
+	ASSET_IMAGE_GUI_PAUSE_DOWN_BUTTON = LoadImage("GUI/pause_button2.png")
+	assetManager.images.insert(ASSET_IMAGE_GUI_PAUSE_DOWN_BUTTON)
+	
+	ASSET_IMAGE_GUI_PAUSE_UP_BUTTON = LoadImage("GUI/pause_button1.png")
+	assetManager.images.insert(ASSET_IMAGE_GUI_PAUSE_UP_BUTTON)
 endfunction
 
 function AssetManager_LoadSounds(assetManager ref as AssetManager)

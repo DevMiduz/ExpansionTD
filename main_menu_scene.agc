@@ -47,7 +47,9 @@ global MainMenuScene_Sprite_MusicDisabledButton
 */
 function MainMenuScene_CreateSceneObject()
 	scene as scene
-	MainMenuScene_ID = IDGenerator_GenerateNewID(GLOBAL_ID_GENERATOR)
+	
+	if(MainMenuScene_ID <= 0) then MainMenuScene_ID = IDGenerator_GenerateNewID(GLOBAL_ID_GENERATOR)
+	
 	scene.id = MainMenuScene_ID
 	
 	// Create Main Menu Title
@@ -85,26 +87,44 @@ function MainMenuScene_CreateSceneObject()
 	MainMenuScene_Sprite_SoundEnabledButton = CreateSprite(ASSET_IMAGE_GUI_SOUND_ENABLED_BUTTON)
 	SetSpritePositionByOffset(MainMenuScene_Sprite_SoundEnabledButton, GetVirtualWidth() - 8, 8)
 	SetSpriteSize(MainMenuScene_Sprite_SoundEnabledButton, 14, 14)
+	SetSpriteVisible(MainMenuScene_Sprite_SoundEnabledButton, AudioManager.soundEnabled)
 	Scene_InsertSprite(scene, MainMenuScene_Sprite_SoundEnabledButton)
 	
 	// Create Sound Disabled Button
 	MainMenuScene_Sprite_SoundDisabledButton = CreateSprite(ASSET_IMAGE_GUI_SOUND_DISABLED_BUTTON)
 	SetSpritePositionByOffset(MainMenuScene_Sprite_SoundDisabledButton, GetVirtualWidth() - 8, 8)
 	SetSpriteSize(MainMenuScene_Sprite_SoundDisabledButton, 14, 14)
-	SetSpriteVisible(MainMenuScene_Sprite_SoundDisabledButton, 0)
+	
+	if(AudioManager.soundEnabled = 1)
+		SetSpriteVisible(MainMenuScene_Sprite_SoundDisabledButton, 0)
+		SetSpriteVisible(MainMenuScene_Sprite_SoundEnabledButton, 1)
+	else
+		SetSpriteVisible(MainMenuScene_Sprite_SoundDisabledButton, 1)
+		SetSpriteVisible(MainMenuScene_Sprite_SoundEnabledButton, 0)
+	endif
+	
 	Scene_InsertSprite(scene, MainMenuScene_Sprite_SoundDisabledButton)
 	
-	// Create Sound Enabled Button
+	// Create Music Enabled Button
 	MainMenuScene_Sprite_MusicEnabledButton = CreateSprite(ASSET_IMAGE_GUI_MUSIC_ENABLED_BUTTON)
 	SetSpritePositionByOffset(MainMenuScene_Sprite_MusicEnabledButton, GetVirtualWidth() - 24, 8)
 	SetSpriteSize(MainMenuScene_Sprite_MusicEnabledButton, 14, 14)
+	SetSpriteVisible(MainMenuScene_Sprite_MusicEnabledButton, AudioManager.musicEnabled)
 	Scene_InsertSprite(scene, MainMenuScene_Sprite_MusicEnabledButton)
 	
-	// Create Sound Disabled Button
+	// Create Music Disabled Button
 	MainMenuScene_Sprite_MusicDisabledButton = CreateSprite(ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON)
 	SetSpritePositionByOffset(MainMenuScene_Sprite_MusicDisabledButton, GetVirtualWidth() - 24, 8)
 	SetSpriteSize(MainMenuScene_Sprite_MusicDisabledButton, 14, 14)
-	SetSpriteVisible(MainMenuScene_Sprite_MusicDisabledButton, 0)
+
+	if(AudioManager.musicEnabled = 1)
+		SetSpriteVisible(MainMenuScene_Sprite_MusicDisabledButton, 0)
+		SetSpriteVisible(MainMenuScene_Sprite_MusicEnabledButton, 1)
+	else
+		SetSpriteVisible(MainMenuScene_Sprite_MusicDisabledButton, 1)
+		SetSpriteVisible(MainMenuScene_Sprite_MusicEnabledButton, 0)
+	endif
+	
 	Scene_InsertSprite(scene, MainMenuScene_Sprite_MusicDisabledButton)
 	
 	// Create Help Button Up Sprite
@@ -158,7 +178,13 @@ endfunction scene
 function MainMenuScene_Sync()
 	
 	// BUTTON HANDLING
-	Button_EventTest(MainMenuScene_Sprite_PlayGameButtonUp, MainMenuScene_Sprite_PlayGameButtonDown)
+	select(Button_EventTest(MainMenuScene_Sprite_PlayGameButtonUp, MainMenuScene_Sprite_PlayGameButtonDown))
+		case 1:
+			SceneManager_StoreNextScene(sceneManager, PlayScene_CreateSceneObject())
+			EventHandler_PushEvent(eventHandler, CONST_NEXT_SCENE_EVENT_ID)
+		endcase
+	endselect
+	
 	Button_EventTest(MainMenuScene_Sprite_HelpButtonUp, MainMenuScene_Sprite_HelpButtonDown)
 	Button_EventTest(MainMenuScene_Sprite_AboutButtonUp, MainMenuScene_Sprite_AboutButtonDown)
 	
@@ -182,20 +208,4 @@ function MainMenuScene_Sync()
 		endcase
 	endselect 
 	 
-endfunction
-
-function MainMenuScene_Setup()
-	
-endfunction
-
-function MainMenuScene_Physics()
-	
-endfunction
-
-function MainMenuScene_Update()
-	
-endfunction
-
-function MainMenuScene_Draw()
-	
 endfunction

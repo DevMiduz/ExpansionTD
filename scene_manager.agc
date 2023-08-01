@@ -26,6 +26,7 @@ global sceneManager as SceneManager
 */
 
 type SceneManager
+	nextScene as Scene
 	scenes as Scene[]
 endtype
 
@@ -41,6 +42,14 @@ function SceneManager_GetCurrentScene(sceneManager ref as SceneManager, scene re
 	scene = sceneManager.scenes[sceneManager.scenes.length]
 endfunction 1
 
+function SceneManager_StoreNextScene(sceneManager ref as SceneManager, scene as Scene)
+	SceneManager.nextScene = scene
+endfunction
+
+function SceneManager_ChangeToNextScene(sceneManager ref as SceneManager)
+	SceneManager_ChangeScene(sceneManager, SceneManager.nextScene)
+endfunction
+
 function SceneManager_ChangeScene(sceneManager ref as SceneManager, scene as Scene)
 	if(sceneManager.scenes.length = -1) then exitfunction -1
 	
@@ -49,7 +58,7 @@ function SceneManager_ChangeScene(sceneManager ref as SceneManager, scene as Sce
 	Scene_Destroy(current_scene)
 	
 	sceneManager.scenes[sceneManager.scenes.length] = scene
-	Scene_Show(scene)
+	//Scene_Show(scene)
 endfunction 1
 
 function SceneManager_Push(sceneManager ref as SceneManager, scene as Scene)
@@ -83,6 +92,12 @@ function SceneManager_Sync(sceneManager ref as SceneManager)
 	select scene.id
 		case MainMenuScene_ID:
 			MainMenuScene_Sync()
+		endcase
+		case PlayScene_ID:
+			PlayScene_Sync()
+		endcase
+		case PauseScene_ID:
+			PauseScene_Sync()
 		endcase
 	endselect
 	

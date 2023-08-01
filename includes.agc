@@ -37,3 +37,5 @@
 #include "grid_pathfinding.agc"
 
 #include "main_menu_scene.agc"
+#include "play_scene.agc"
+#include "pause_scene.agc"

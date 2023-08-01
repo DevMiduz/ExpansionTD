@@ -66,12 +66,20 @@ function EventHandler_PopEvent(eventHandler ref as EventHandler)
 	endif
 endfunction -1
 
+function EventHandler_PopFrontEvent(eventHandler ref as EventHandler)
+	if(eventHandler.queue.length <> -1)
+		id = EventHandler.queue[0]
+		eventHandler.queue.remove(0)
+		exitfunction id
+	endif
+endfunction -1
+
 function EventHandler_RunEvents(eventHandler ref as EventHandler)
-	eventID = EventHandler_PopEvent(eventHandler)
+	eventID = EventHandler_PopFrontEvent(eventHandler)
 	
 	while (eventID) <> -1
 		EventHandler_RunEvent(eventHandler, eventID)
-		eventID = EventHandler_PopEvent(eventHandler)
+		eventID = EventHandler_PopFrontEvent(eventHandler)
 	endwhile
 endfunction
 
@@ -124,6 +132,14 @@ function EventHandler_RunEvent(eventHandler ref as EventHandler, eventID as inte
 		case CONST_ENEMY_KILLED_EVENT_ID:
 			EventHandler_EnemyKilledEvent()
 		endcase
+		
+		case CONST_NEXT_SCENE_EVENT_ID:
+			EventHandler_NextSceneEvent()
+		endcase
+		
+		case CONST_POP_SCENE_EVENT_ID:
+			EventHandler_PopSceneEvent()
+		endcase
 	endselect
 endfunction
 
@@ -173,4 +189,13 @@ endfunction
 
 function EventHandler_EnemyKilledEvent()
 	
+endfunction
+
+function EventHandler_NextSceneEvent()
+	SceneManager_ChangeToNextScene(sceneManager)
+endfunction
+
+function EventHandler_PopSceneEvent()
+	scene as Scene
+	SceneManager_Pop(sceneManager, scene)
 endfunction
