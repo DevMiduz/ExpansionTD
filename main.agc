@@ -42,6 +42,7 @@ InitGame()
 
 do
     Print( ScreenFPS() )
+    AudioManager_PlayMusicQueue(audioManager)
     InputHandler_InputDataUpdate()
     SceneManager_Sync(sceneManager)
     EventHandler_RunEvents(eventHandler)

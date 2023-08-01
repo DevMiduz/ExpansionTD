@@ -34,10 +34,16 @@ global ASSET_IMAGE_GUI_MUSIC_ENABLED_BUTTON as integer
 global ASSET_IMAGE_GUI_MUSIC_DISABLED_BUTTON as integer
 
 //	GLOBALS -- SOUNDS
-
+global ASSET_SOUND_SELECT_SOUND_1 as integer
+global ASSET_SOUND_SELECT_SOUND_2 as integer
 
 //	GLOBALS -- MUSIC
-
+global ASSET_MUSIC_BACKGROUND_1 as integer
+global ASSET_MUSIC_BACKGROUND_2 as integer
+global ASSET_MUSIC_BACKGROUND_3 as integer
+global ASSET_MUSIC_BACKGROUND_4 as integer
+global ASSET_MUSIC_BACKGROUND_5 as integer
+global ASSET_MUSIC_BACKGROUND_6 as integer
 
 //	GLOBALS -- FONTS
 global ASSET_FONT_BOLD_FONT as integer
@@ -90,11 +96,31 @@ function AssetManager_LoadImages(assetManager ref as AssetManager)
 endfunction
 
 function AssetManager_LoadSounds(assetManager ref as AssetManager)
+	ASSET_SOUND_SELECT_SOUND_1 = LoadSoundOGG("Sound/select_006.ogg")
+	assetManager.sounds.insert(ASSET_SOUND_SELECT_SOUND_1)
 	
+	ASSET_SOUND_SELECT_SOUND_2 = LoadSoundOGG("Sound/click_003.ogg")
+	assetManager.sounds.insert(ASSET_SOUND_SELECT_SOUND_2)
 endfunction
 
 function AssetManager_LoadMusic(assetManager ref as AssetManager)
+	ASSET_MUSIC_BACKGROUND_1 = LoadMusicOGG("Music/Mishief Stroll.ogg")
+	assetManager.music.insert(ASSET_MUSIC_BACKGROUND_1)
 	
+	ASSET_MUSIC_BACKGROUND_2 = LoadMusicOGG("Music/Alpha Dance.ogg")
+	assetManager.music.insert(ASSET_MUSIC_BACKGROUND_2)
+	
+	ASSET_MUSIC_BACKGROUND_3 = LoadMusicOGG("Music/Italian Mom.ogg")
+	assetManager.music.insert(ASSET_MUSIC_BACKGROUND_3)
+	
+	ASSET_MUSIC_BACKGROUND_4 = LoadMusicOGG("Music/Night at the Beach.ogg")
+	assetManager.music.insert(ASSET_MUSIC_BACKGROUND_4)
+
+	ASSET_MUSIC_BACKGROUND_5 = LoadMusicOGG("Music/Sad Town.ogg")
+	assetManager.music.insert(ASSET_MUSIC_BACKGROUND_5)
+	
+	ASSET_MUSIC_BACKGROUND_6 = LoadMusicOGG("Music/Wacky Waiting.ogg")
+	assetManager.music.insert(ASSET_MUSIC_BACKGROUND_6)
 endfunction
 
 function AssetManager_LoadFonts(assetManager ref as AssetManager)

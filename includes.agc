@@ -26,6 +26,7 @@
 #include "store.agc"
 #include "event_handler.agc"
 #include "asset_manager.agc"
+#include "audio_manager.agc"
 
 #include "player.agc"
 #include "enemy.agc"

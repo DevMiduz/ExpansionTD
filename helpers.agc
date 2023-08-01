@@ -88,9 +88,10 @@ endfunction index
 
 function Button_EventTest(upSprite as integer, downSprite as integer)
 	if(GetSpriteHitTest(upSprite, InputHandler_Data.pointerPosX, InputHandler_Data.pointerPosY) = 1)
-		if(InputHandler_Data.pointer = CONST_INPUT_PRESSED or InputHandler_Data.pointer = CONST_INPUT_HELD)
+		if(InputHandler_Data.pointer = CONST_INPUT_PRESSED)
 			SetSpriteVisible(downSprite, 1)
 			SetSpriteVisible(upSprite, 0)
+			AudioManager_PlaySound(audioManager, ASSET_SOUND_SELECT_SOUND_2, 100)
 			exitfunction 0
 		elseif(InputHandler_Data.pointer = CONST_INPUT_RELEASED)
 			SetSpriteVisible(downSprite, 0)
@@ -109,10 +110,12 @@ function Button_ToggleEventTest(enabledSprite as integer, disabledSprite as inte
 		if(GetSpriteVisible(enabledSprite) = 1)
 			SetSpriteVisible(enabledSprite, 0)
 			SetSpriteVisible(disabledSprite, 1)
+			AudioManager_PlaySound(audioManager, ASSET_SOUND_SELECT_SOUND_2, 100)
 			exitfunction 0
 		else
 			SetSpriteVisible(enabledSprite, 1)
 			SetSpriteVisible(disabledSprite, 0)
+			AudioManager_PlaySound(audioManager, ASSET_SOUND_SELECT_SOUND_2, 100)
 			exitfunction 1
 		endif
 	endif

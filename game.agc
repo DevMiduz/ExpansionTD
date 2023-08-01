@@ -20,6 +20,7 @@
 function initGame()
 	AssetManager_LoadAssets(assetManager)
 	InputHandler_InputDataUpdate()
+	AudioManager_Init(audioManager)
 	
 	SceneManager_Push(sceneManager, MainMenuScene_CreateSceneObject())
 endfunction

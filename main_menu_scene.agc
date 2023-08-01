@@ -161,8 +161,27 @@ function MainMenuScene_Sync()
 	Button_EventTest(MainMenuScene_Sprite_PlayGameButtonUp, MainMenuScene_Sprite_PlayGameButtonDown)
 	Button_EventTest(MainMenuScene_Sprite_HelpButtonUp, MainMenuScene_Sprite_HelpButtonDown)
 	Button_EventTest(MainMenuScene_Sprite_AboutButtonUp, MainMenuScene_Sprite_AboutButtonDown)
-	Button_ToggleEventTest(MainMenuScene_Sprite_SoundEnabledButton, MainMenuScene_Sprite_SoundDisabledButton)
-	Button_ToggleEventTest(MainMenuScene_Sprite_MusicEnabledButton, MainMenuScene_Sprite_MusicDisabledButton)
+	
+	// Enable/Disable Sound.
+	select(Button_ToggleEventTest(MainMenuScene_Sprite_SoundEnabledButton, MainMenuScene_Sprite_SoundDisabledButton))
+		case 0: 
+			AudioManager.soundEnabled = 0 
+		endcase
+		case 1: 
+			AudioManager.soundEnabled = 1 
+		endcase
+	endselect
+	 
+	//Enabled/Disable Music
+	select(Button_ToggleEventTest(MainMenuScene_Sprite_MusicEnabledButton, MainMenuScene_Sprite_MusicDisabledButton))
+		case 0: 
+			AudioManager.musicEnabled = 0 
+		endcase
+		case 1: 
+			AudioManager.musicEnabled = 1 
+		endcase
+	endselect 
+	 
 endfunction
 
 function MainMenuScene_Setup()
