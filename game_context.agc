@@ -42,7 +42,7 @@ function GameContext_Init(gameContext ref as GameContext)
 	gameContext.init = 1
 	
 	// Setup Camera
-	gameContext.camera = Camera_Create(0, GetVirtualHeight() / 2, 1)
+	gameContext.camera = Camera_Create(8, GetVirtualHeight() / 2, 1)
 	
 	// Setup Grid
 	gameContext.grid = Grid_Create(16, Vector2D_CreateVector(0,0))
@@ -61,17 +61,25 @@ function GameContext_Init(gameContext ref as GameContext)
 	Grid_GetTileFromWorldPosition(gameContext.grid, tile, Vector2D_CreateVector(0, 0))
 	
 	GridPathfinding_UpdatePathDistances(gameContext.grid, gameContext.tileDataArray, tile)
-	GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
+	//GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
 	
 endfunction
 
 function GameContext_Update(gameContext ref as GameContext)
 	// Update Camera
 	Camera_Update(GameContext.camera)
+	
+	if(InputHandler_Data.confirm = CONST_INPUT_PRESSED)
+			inc gameContext.gridExpander.eastOffset
+			inc gameContext.gridExpander.westOffset
+			inc gameContext.gridExpander.southOffset
+			GridExpander_ExpandGrid(gameContext.grid, gameContext.gridExpander)
+			GridPathfinding_InitGrid(gameContext.grid, gameContext.gridExpander, gameContext.tileDataArray)
+	endif
 endfunction
 
 function GameContext_Draw(gameContext ref as GameContext)
-	GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
+	//GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
 endfunction
 
 

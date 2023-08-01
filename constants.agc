@@ -35,6 +35,18 @@
 #constant CONST_VIRTUAL_HEIGHT = 180
 #constant CONST_SYNC_RATE = 60
 
+// DEPTH CONSTANTS
+#constant CONST_DEPTH_ALL_FRONT = 0
+#constant CONST_DEPTH_GUI_FRONT = 1000
+#constant CONST_DEPTH_GUI_MIDDLE = 1500
+#constant CONST_DEPTH_GUI_BACK = 2000
+
+#constant CONST_DEPTH_GAME_FRONT = 2500
+#constant CONST_DEPTH_GAME_MIDDLE_FRONT = 3000
+#constant CONST_DEPTH_GAME_MIDDLE = 3500
+#constant CONST_DEPTH_GAME_MIDDLE_BACK = 4000
+#constant CONST_DEPTH_GAME_BACK = 4500
+
 // Input Handler Constants
 #constant CONST_INPUT_IDLE = 0
 #constant CONST_INPUT_PRESSED = 1
@@ -53,6 +65,8 @@
 #constant CONST_MAP_TERRAIN_TYPE_BUILDABLE = 1	// But not pathable
 #constant CONST_MAP_TERRAIN_TYPE_IMPASSIBLE = 2
 #constant CONST_MAP_TERRAIN_TYPE_OCCUPIED = 3		// No sprite -> used for tiles which are occupied
+#constant CONST_MAP_TERRAIN_TYPE_PROTECTED = 4
+#constant CONST_MAP_TERRAIN_TYPE_UNBUILDABLE = 5
 
 // Map Terrain Types Chances
 #constant CONST_MAP_TERRAIN_TYPE_BUILDABLE_CHANCE = 10 	// Higher is worse.

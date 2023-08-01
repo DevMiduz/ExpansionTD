@@ -153,9 +153,14 @@ endfunction
 function GridPathfinding_InitTileData(grid ref as Grid, tileDataArray ref as TileData[])
 	tileData as TileData
 	position as Vector2D
+	tlPosition as Vector2D
+	brPosition as Vector2D
 	tile as Tile
 	row as Row
 	scene as Scene
+	
+	tlPosition = Grid_GetTopLeftPosition(grid)
+	brPosition = Grid_GetBottomRightPosition(grid)
 	
 	SceneManager_GetCurrentScene(sceneManager, scene)
 	
@@ -163,27 +168,41 @@ function GridPathfinding_InitTileData(grid ref as Grid, tileDataArray ref as Til
 		row = grid.rows[rowIndex]
 		for colIndex = 0 to row.tiles.length
 			tile = row.tiles[colIndex]
-			tileData = TileData_Create(tile.id, Map_GetRandomTileType(), -1)
 			
-			if(tileData.sprite <= 0)
+			if(GridPathfinding_GetTileData(tileDataArray, tileData, tile.id) = 1)
+				if(tileData.status = CONST_MAP_TERRAIN_TYPE_UNBUILDABLE)
+					tileData.status = Map_GetRandomTileType()
+					Map_SetTileTerrainSpriteFrame(tileData.sprite, tileData.status)
+				endif
+			else
+				if(tile.gridPosition.x = 0 and tile.gridPosition.y = 0)
+					tileData = TileData_Create(tile.id, CONST_MAP_TERRAIN_TYPE_PROTECTED, -1)
+				elseif(tile.gridPosition.x = tlPosition.x or tile.gridPosition.x = brPosition.x or tile.gridPosition.y = brPosition.y)
+					tileData = TileData_Create(tile.id, CONST_MAP_TERRAIN_TYPE_UNBUILDABLE, -1)
+				else
+					tileData = TileData_Create(tile.id, Map_GetRandomTileType(), -1)
+				endif
+				
+				
 				tileData.sprite = Map_CreateTileTerrainSprite(tileData.status)
 				Scene_InsertSprite(scene, tileData.sprite)
+				
+				position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
+				SetSpriteDepth(tileData.sprite, CONST_DEPTH_GAME_MIDDLE)
+				SetSpritePosition(tileData.sprite, position.x, position.y)
+				tileDataArray.insert(tileData)
 			endif
-			
-			
-			position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
-			SetSpritePosition(tileData.sprite, position.x, position.y)
-			tileDataArray.insert(tileData)
 		next colIndex
 	next rowIndex
 	
-	tileDataArray.sort()
+	
 	
 	SceneManager_UpdateCurrentScene(sceneManager, scene)
 	
 endfunction
 
 function GridPathfinding_GetTileData(tileDataArray ref as TileData[], tileData ref as TileData, id as integer)
+	tileDataArray.sort()
 	index = tileDataArray.find(id)
 	
 	if(index <> -1)
@@ -244,6 +263,10 @@ endfunction -1
 
 function GridPathfinding_IsTileImpassible(tileData ref as TileData)
 	if(tileData.status = CONST_MAP_TERRAIN_TYPE_IMPASSIBLE) then exitfunction 1
+endfunction -1
+
+function GridPathfinding_IsTileProtected(tileData ref as TileData)
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_PROTECTED) then exitfunction 1
 endfunction -1
 
 function GridPathfinding_HasTileBeenVisited(tileId as integer, grid ref as Grid, visited ref as integer[])	

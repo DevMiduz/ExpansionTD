@@ -52,19 +52,31 @@ endfunction CONST_MAP_TERRAIN_TYPE_OPEN
 function Map_CreateTileTerrainSprite(terrainType as integer)
 	terrainSprite as integer
 	terrainSprite = CreateSprite(ASSET_IMAGE_TERRAIN_TILESET)
-	SetSpriteAnimation(terrainSprite, 16, 16, 3)
+	terrainSprite = Map_SetTileTerrainSpriteFrame(terrainSprite, terrainType)
+endfunction terrainSprite
+
+function Map_SetTileTerrainSpriteFrame(terrainSprite as integer, terrainType as integer)
+	SetSpriteAnimation(terrainSprite, 16, 16, 5)
 	
 	select(terrainType)
 		case CONST_MAP_TERRAIN_TYPE_OPEN:
-			PlaySprite(terrainSprite, 0, 0, 0, 0)
-		endcase
-		
-		case CONST_MAP_TERRAIN_TYPE_BUILDABLE:
-			PlaySprite(terrainSprite, 0, 0, 2, 0)
+			PlaySprite(terrainSprite, 0, 0, 1, 0)
 		endcase
 		
 		case CONST_MAP_TERRAIN_TYPE_IMPASSIBLE:
-			PlaySprite(terrainSprite, 0, 0, 1, 0)
+			PlaySprite(terrainSprite, 0, 0, 2, 0)
+		endcase
+		
+		case CONST_MAP_TERRAIN_TYPE_BUILDABLE:
+			PlaySprite(terrainSprite, 0, 0, 3, 0)
+		endcase
+		
+		case CONST_MAP_TERRAIN_TYPE_PROTECTED:
+			PlaySprite(terrainSprite, 0, 0, 4, 0)
+		endcase
+		
+		case CONST_MAP_TERRAIN_TYPE_UNBUILDABLE:
+			PlaySprite(terrainSprite, 0, 0, 5, 0)
 		endcase
 	endselect
 	

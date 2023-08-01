@@ -46,6 +46,7 @@ function PlayScene_CreateSceneObject()
 	SetSpritePositionByOffset(PlayScene_Sprite_PauseButtonUp, GetVirtualWidth() - 16, 16)
 	FixSpriteToScreen(PlayScene_Sprite_PauseButtonUp, 1)
 	SetSpriteSize(PlayScene_Sprite_PauseButtonUp, 22, 22)
+	SetSpriteDepth(PlayScene_Sprite_PauseButtonUp, CONST_DEPTH_GUI_FRONT)
 	Scene_InsertSprite(scene, PlayScene_Sprite_PauseButtonUp)
 	
 	// Create Pause Button Down Sprite
@@ -53,6 +54,7 @@ function PlayScene_CreateSceneObject()
 	SetSpritePositionByOffset(PlayScene_Sprite_PauseButtonDown, GetVirtualWidth() - 16, 16)
 	FixSpriteToScreen(PlayScene_Sprite_PauseButtonDown, 1)
 	SetSpriteSize(PlayScene_Sprite_PauseButtonDown, 22, 22)
+	SetSpriteDepth(PlayScene_Sprite_PauseButtonDown, CONST_DEPTH_GUI_FRONT)
 	SetSpriteVisible(PlayScene_Sprite_PauseButtonDown, 0)
 	Scene_InsertSprite(scene, PlayScene_Sprite_PauseButtonDown)
 	
@@ -71,9 +73,8 @@ function PlayScene_Sync()
 	
 	// INPUT HANDLING
 	
-	
 	// GAME CONTEXT UPDATE AND DRAW
 	GameContext_Update(gameContext)
-	GameContext_Draw(gameContext)
+	//GameContext_Draw(gameContext)
 	
 endfunction
