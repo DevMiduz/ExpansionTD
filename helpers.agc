@@ -87,7 +87,7 @@ function Array_Integer_FindAndRemove(array ref as integer[], id as integer)
 endfunction index
 
 function Button_EventTest(upSprite as integer, downSprite as integer)
-	if(GetSpriteHitTest(upSprite, InputHandler_Data.pointerPosX, InputHandler_Data.pointerPosY) = 1)
+	if(GetSpriteHitTest(upSprite, ScreenToWorldX(InputHandler_Data.pointerPosX), ScreenToWorldY(InputHandler_Data.pointerPosY)) = 1)
 		if(InputHandler_Data.pointer = CONST_INPUT_PRESSED)
 			SetSpriteVisible(downSprite, 1)
 			SetSpriteVisible(upSprite, 0)
@@ -106,7 +106,7 @@ function Button_EventTest(upSprite as integer, downSprite as integer)
 endfunction -1
 
 function Button_ToggleEventTest(enabledSprite as integer, disabledSprite as integer)
-	if(GetSpriteHitTest(enabledSprite, InputHandler_Data.pointerPosX, InputHandler_Data.pointerPosY) = 1 and InputHandler_Data.pointer = CONST_INPUT_PRESSED)
+	if(GetSpriteHitTest(enabledSprite, ScreenToWorldX(InputHandler_Data.pointerPosX), ScreenToWorldY(InputHandler_Data.pointerPosY)) = 1 and InputHandler_Data.pointer = CONST_INPUT_PRESSED)
 		if(GetSpriteVisible(enabledSprite) = 1)
 			SetSpriteActive(enabledSprite, 0)
 			SetSpriteVisible(enabledSprite, 0)

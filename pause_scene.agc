@@ -172,6 +172,8 @@ function PauseScene_CreateSceneObject()
 	
 	Scene_InsertSprite(scene, PauseScene_Sprite_MusicDisabledButton)
 	
+	SetViewOffset(0,0)
+	
 endfunction scene
 
 function PauseScene_Sync()
@@ -185,6 +187,9 @@ function PauseScene_Sync()
 	
 	select(Button_EventTest(PauseScene_Sprite_RestartButtonUp, PauseScene_Sprite_RestartButtonDown))
 		case 1:
+			GameContext_Cleanup(gameContext)
+			GameContext_Init(gameContext)
+			
 			EventHandler_PushEvent(eventHandler, CONST_POP_SCENE_EVENT_ID)
 			SceneManager_StoreNextScene(sceneManager, PlayScene_CreateSceneObject())
 			EventHandler_PushEvent(eventHandler, CONST_NEXT_SCENE_EVENT_ID)
@@ -194,6 +199,9 @@ function PauseScene_Sync()
 	
 	select(Button_EventTest(PauseScene_Sprite_ExitButtonUp, PauseScene_Sprite_ExitButtonDown))
 		case 1:
+			GameContext_Cleanup(gameContext)
+			GameContext_Init(gameContext)
+			
 			EventHandler_PushEvent(eventHandler, CONST_POP_SCENE_EVENT_ID)
 			SceneManager_StoreNextScene(sceneManager,	MainMenuScene_CreateSceneObject())
 			EventHandler_PushEvent(eventHandler, CONST_NEXT_SCENE_EVENT_ID)

@@ -173,6 +173,8 @@ function MainMenuScene_CreateSceneObject()
 	SetTextSize(MainMenuScene_Text_About, 8)
 	Scene_InsertText(scene, MainMenuScene_Text_About)
 	
+	SetViewOffset(0,0)
+	
 endfunction scene
 
 function MainMenuScene_Sync()

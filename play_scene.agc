@@ -28,6 +28,7 @@ global PlayScene_ID
 global PlayScene_Sprite_PauseButtonUp
 global PlayScene_Sprite_PauseButtonDown
 
+
 /*
 
 	FUNCTIONS
@@ -43,19 +44,23 @@ function PlayScene_CreateSceneObject()
 	// Create Pause Button Up Sprite
 	PlayScene_Sprite_PauseButtonUp = CreateSprite(ASSET_IMAGE_GUI_PAUSE_UP_BUTTON)
 	SetSpritePositionByOffset(PlayScene_Sprite_PauseButtonUp, GetVirtualWidth() - 8, 8)
+	FixSpriteToScreen(PlayScene_Sprite_PauseButtonUp, 1)
 	SetSpriteSize(PlayScene_Sprite_PauseButtonUp, 14, 14)
 	Scene_InsertSprite(scene, PlayScene_Sprite_PauseButtonUp)
 	
 	// Create Pause Button Down Sprite
 	PlayScene_Sprite_PauseButtonDown = CreateSprite(ASSET_IMAGE_GUI_PAUSE_DOWN_BUTTON)
 	SetSpritePositionByOffset(PlayScene_Sprite_PauseButtonDown, GetVirtualWidth() - 8, 8)
+	FixSpriteToScreen(PlayScene_Sprite_PauseButtonDown, 1)
 	SetSpriteSize(PlayScene_Sprite_PauseButtonDown, 14, 14)
 	SetSpriteVisible(PlayScene_Sprite_PauseButtonDown, 0)
 	Scene_InsertSprite(scene, PlayScene_Sprite_PauseButtonDown)
 	
+	
 endfunction scene
 
 function PlayScene_Sync()
+	if(gameContext.init = 0) then GameContext_Init(gameContext)
 	
 	// BUTTON HANDLING
 	select(Button_EventTest(PlayScene_Sprite_PauseButtonUp, PlayScene_Sprite_PauseButtonDown))
@@ -63,5 +68,6 @@ function PlayScene_Sync()
 			SceneManager_Push(sceneManager, PauseScene_CreateSceneObject())
 		endcase
 	endselect
+	
 	 
 endfunction
