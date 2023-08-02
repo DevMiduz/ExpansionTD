@@ -106,7 +106,7 @@ function GameContext_Update(gameContext ref as GameContext)
 			endif
 			*/
 			
-			Spawner_SpawnEnemy(gameContext.grid, 0)
+			Spawner_SpawnEnemy(gameContext.grid, gameContext.tileDataArray, 0)
     		endif
     		
     		//GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)

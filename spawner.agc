@@ -35,14 +35,24 @@
 
 */
 
-function Spawner_SpawnEnemy(grid ref as Grid, enemyType as integer)
+function Spawner_SpawnEnemy(grid ref as Grid, tileDataArray ref as tileData[], enemyType as integer)
 	index = Random(0, grid.newTiles.length)
 	
 	// Generate Random Boundary Position
 	position as Vector2D
-	position = Grid_GetTileCenterByIndex(grid, grid.newTiles[index].gridPosition.x, grid.newTiles[index].gridPosition.y)
+	position.x = grid.newTiles[index].gridPosition.x
+	position.y = grid.newTiles[index].gridPosition.y
 	
 	// Create the enemy
 	enemy as Enemy
 	enemy = Enemy_Create(position, 0, 1)
+	
+	worldPosition as Vector2D
+	worldPosition = Grid_GetTileCenterByIndex(grid, enemy.position.x, enemy.position.y)
+	SetSpritePositionByOffset(enemy.sprite, worldPosition.x, worldPosition.y)
+	
+	//Find Next Position
+	Enemy_FindNextPathPoint(grid, tileDataArray, enemy)
+	Enemy_UpdateEnemyDirection(enemy)
+	
 endfunction
