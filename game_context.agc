@@ -48,10 +48,10 @@ function GameContext_Init(gameContext ref as GameContext)
 	gameContext.grid = Grid_Create(16, Vector2D_CreateVector(0,0))
 	
 	// Expand Grid
-	gameContext.gridExpander.eastOffset = 6
-	gameContext.gridExpander.westOffset = 6
+	gameContext.gridExpander.eastOffset = 1
+	gameContext.gridExpander.westOffset = 1
 	gameContext.gridExpander.northOffset = 0
-	gameContext.gridExpander.southOffset = 6
+	gameContext.gridExpander.southOffset = 1
 	GridExpander_ExpandGrid(gameContext.grid, gameContext.gridExpander)
 	
 	// Calculate Path Finding Distances
@@ -76,10 +76,23 @@ function GameContext_Update(gameContext ref as GameContext)
 			GridExpander_ExpandGrid(gameContext.grid, gameContext.gridExpander)
 			GridPathfinding_InitGrid(gameContext.grid, gameContext.gridExpander, gameContext.tileDataArray)
 	endif
+	
+		    
+	 if(GetPointerPressed())
+			GridPathfinding_ResetTileDataDistances(gameContext.tileDataArray)
+			
+			tile as Tile
+			if(Grid_GetTileFromWorldPosition(gameContext.grid, tile, Vector2D_CreateVector(ScreenToWorldX(GetPointerX()), ScreenToWorldY(GetPointerY()))) <> -1)
+				GridPathfinding_UpdatePathDistances(gameContext.grid, gameContext.tileDataArray, tile)
+				GridPathfinding_DebugTileData(gameContext.tileDataArray)
+			endif
+    		endif
+    		
+    		GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
 endfunction
 
 function GameContext_Draw(gameContext ref as GameContext)
-	//GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
+	
 endfunction
 
 

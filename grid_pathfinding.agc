@@ -64,7 +64,9 @@ function GridPathfinding_UpdatePathDistances(grid ref as Grid, tileDataArray ref
 	
 	GridPathfinding_GetTileData(tileDataArray, currentTileData, startTile.id)
 	
-	if(currentTileData.status <> CONST_MAP_TERRAIN_TYPE_OPEN) then exitfunction
+	if(GridPathfinding_IsTilePathable(currentTileData) <> 1) 
+		exitfunction
+	endif
 	
 	currentTileData.distance = 0
 	GridPathfinding_InsertOrUpdateTileData(tileDataArray, currentTileData)
@@ -99,7 +101,7 @@ function GridPathfinding_FindTileNeighbours(grid ref as Grid, tileDataArray ref 
 		Grid_GetTileFromGridPosition(grid, neighbourTile, Vector2D_CreateVector(tile.gridPosition.x - 1, tile.gridPosition.y))
 		GridPathfinding_GetTileData(tileDataArray, neighbourTileData, neighbourTile.id)
 	
-		if(GridPathfinding_HasTileBeenVisited(neighbourTile.id, grid, visited) = -1 and GridPathfinding_IsTileOpen(neighbourTileData) = 1)
+		if(GridPathfinding_HasTileBeenVisited(neighbourTile.id, grid, visited) = -1 and GridPathfinding_IsTilePathable(neighbourTileData) = 1)
 			neighbourTileData.distance = tileData.distance + 1
 			GridPathfinding_InsertOrUpdateTileData(tileDataArray, neighbourTileData)
 			toVisit.insert(neighbourTile)
@@ -111,7 +113,7 @@ function GridPathfinding_FindTileNeighbours(grid ref as Grid, tileDataArray ref 
 		Grid_GetTileFromGridPosition(grid, neighbourTile, Vector2D_CreateVector(tile.gridPosition.x, tile.gridPosition.y - 1))
 		GridPathfinding_GetTileData(tileDataArray, neighbourTileData, neighbourTile.id)
 	
-		if(GridPathfinding_HasTileBeenVisited(neighbourTile.id, grid, visited) = -1 and GridPathfinding_IsTileOpen(neighbourTileData) = 1)
+		if(GridPathfinding_HasTileBeenVisited(neighbourTile.id, grid, visited) = -1 and GridPathfinding_IsTilePathable(neighbourTileData) = 1)
 			neighbourTileData.distance = tileData.distance + 1
 			GridPathfinding_InsertOrUpdateTileData(tileDataArray, neighbourTileData)
 			toVisit.insert(neighbourTile)
@@ -123,7 +125,7 @@ function GridPathfinding_FindTileNeighbours(grid ref as Grid, tileDataArray ref 
 		Grid_GetTileFromGridPosition(grid, neighbourTile, Vector2D_CreateVector(tile.gridPosition.x + 1, tile.gridPosition.y))
 		GridPathfinding_GetTileData(tileDataArray, neighbourTileData, neighbourTile.id)
 	
-		if(GridPathfinding_HasTileBeenVisited(neighbourTile.id, grid, visited) = -1 and GridPathfinding_IsTileOpen(neighbourTileData) = 1)
+		if(GridPathfinding_HasTileBeenVisited(neighbourTile.id, grid, visited) = -1 and GridPathfinding_IsTilePathable(neighbourTileData) = 1)
 			neighbourTileData.distance = tileData.distance + 1
 			GridPathfinding_InsertOrUpdateTileData(tileDataArray, neighbourTileData)
 			toVisit.insert(neighbourTile)
@@ -135,7 +137,7 @@ function GridPathfinding_FindTileNeighbours(grid ref as Grid, tileDataArray ref 
 		Grid_GetTileFromGridPosition(grid, neighbourTile, Vector2D_CreateVector(tile.gridPosition.x, tile.gridPosition.y + 1))
 		GridPathfinding_GetTileData(tileDataArray, neighbourTileData, neighbourTile.id)
 	
-		if(GridPathfinding_HasTileBeenVisited(neighbourTile.id, grid, visited) = -1 and GridPathfinding_IsTileOpen(neighbourTileData) = 1)
+		if(GridPathfinding_HasTileBeenVisited(neighbourTile.id, grid, visited) = -1 and GridPathfinding_IsTilePathable(neighbourTileData) = 1)
 			neighbourTileData.distance = tileData.distance + 1 
 			GridPathfinding_InsertOrUpdateTileData(tileDataArray, neighbourTileData)
 			toVisit.insert(neighbourTile)
@@ -169,10 +171,11 @@ function GridPathfinding_InitTileData(grid ref as Grid, tileDataArray ref as Til
 		for colIndex = 0 to row.tiles.length
 			tile = row.tiles[colIndex]
 			
-			if(GridPathfinding_GetTileData(tileDataArray, tileData, tile.id) = 1)
+			if(GridPathfinding_GetTileData(tileDataArray, tileData, tile.id) <> -1)
 				if(tileData.status = CONST_MAP_TERRAIN_TYPE_UNBUILDABLE)
 					tileData.status = Map_GetRandomTileType()
 					Map_SetTileTerrainSpriteFrame(tileData.sprite, tileData.status)
+					GridPathfinding_InsertOrUpdateTileData(tileDataArray, tileData)
 				endif
 			else
 				if(tile.gridPosition.x = 0 and tile.gridPosition.y = 0)
@@ -188,9 +191,10 @@ function GridPathfinding_InitTileData(grid ref as Grid, tileDataArray ref as Til
 				Scene_InsertSprite(scene, tileData.sprite)
 				
 				position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
+				
 				SetSpriteDepth(tileData.sprite, CONST_DEPTH_GAME_MIDDLE)
 				SetSpritePosition(tileData.sprite, position.x, position.y)
-				tileDataArray.insert(tileData)
+				GridPathfinding_InsertOrUpdateTileData(tileDataArray, tileData)
 			endif
 		next colIndex
 	next rowIndex
@@ -212,7 +216,9 @@ function GridPathfinding_GetTileData(tileDataArray ref as TileData[], tileData r
 endfunction index
 
 function GridPathfinding_InsertOrUpdateTileData(tileDataArray ref as TileData[], tileData as TileData)
-	index = tileDataArray.find(tileData.tileId)
+	
+	oldTileData as TileData
+	index = GridPathfinding_GetTileData(tileDataArray, oldTileData, TileData.tileId)
 	
 	if(index <> -1)
 		tileDataArray[index] = tileData
@@ -248,25 +254,59 @@ function GridPathfinding_ResetTileDataDistances(tileDataArray ref as TileData[])
 	next i
 endfunction
 
+function GridPathfinding_IsTilePathable(tileData ref as TileData)
+	result = -1
+	
+	select tileData.status
+		case CONST_MAP_TERRAIN_TYPE_OPEN:
+			result = 1
+		endcase
+		
+		case CONST_MAP_TERRAIN_TYPE_UNBUILDABLE:
+			result = 1
+		endcase
+		
+		case CONST_MAP_TERRAIN_TYPE_PROTECTED:
+			result = 1
+		endcase
+	endselect
+
+endfunction result
+
 function GridPathfinding_IsTileOpen(tileData ref as TileData)
-	if(tileData.status = CONST_MAP_TERRAIN_TYPE_OPEN) then exitfunction 1
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_OPEN) 
+		exitfunction 1
+	endif
 endfunction -1
 
 function GridPathfinding_IsTileOccupied(tileData ref as TileData)
-	if(tileData.status = CONST_MAP_TERRAIN_TYPE_OCCUPIED) then exitfunction 1
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_OCCUPIED) 
+		exitfunction 1
+	endif
 endfunction -1
 
+function GridPathfinding_IsTileUnbuildable(tileData ref as TileData)
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_UNBUILDABLE) 
+		exitfunction 1
+	endif
+endfunction -1
 
 function GridPathfinding_IsTileBuildable(tileData ref as TileData)
-	if(tileData.status = CONST_MAP_TERRAIN_TYPE_BUILDABLE) then exitfunction 1
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_BUILDABLE) 
+		exitfunction 1
+	endif
 endfunction -1
 
 function GridPathfinding_IsTileImpassible(tileData ref as TileData)
-	if(tileData.status = CONST_MAP_TERRAIN_TYPE_IMPASSIBLE) then exitfunction 1
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_IMPASSIBLE) 
+		exitfunction 1
+	endif
 endfunction -1
 
 function GridPathfinding_IsTileProtected(tileData ref as TileData)
-	if(tileData.status = CONST_MAP_TERRAIN_TYPE_PROTECTED) then exitfunction 1
+	if(tileData.status = CONST_MAP_TERRAIN_TYPE_PROTECTED) 
+		exitfunction 1
+	endif
 endfunction -1
 
 function GridPathfinding_HasTileBeenVisited(tileId as integer, grid ref as Grid, visited ref as integer[])	
@@ -320,16 +360,18 @@ function GridPathfinding_DrawGrid(grid ref as Grid, tileDataArray ref as TileDat
 			position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
 			//DrawBox(WorldToScreenX(position.x), WorldToScreenY(position.y), WorldToScreenX(position.x + grid.tileSize), WorldToScreenY(position.y + grid.tileSize), color, color, color, color, 0)
 			
-			/*
+			
 			if(GetTextExists(tileData.distanceText) = 0)
 				tileData.distanceText = CreateText(str(tileData.distance))
 			endif
 			
 			
+			SetTextSize(tileData.distanceText, 12)
 			SetTextString(tileData.distanceText, str(tileData.distance))
 			SetTextPosition(tileData.distanceText, position.x, position.y)
+			SetTextDepth(tileData.distanceText, CONST_DEPTH_GUI_MIDDLE)
 			GridPathfinding_InsertOrUpdateTileData(tileDataArray, tileData)
-			*/
+			
 			
 		next colIndex
 	next rowIndex
@@ -389,7 +431,7 @@ function GridPathfinding_TestUtility()
 	    		inc gridExpander.southOffset
 	    		GridExpander_ExpandGrid(grid, gridExpander)
 	    		GridPathfinding_InitTileData(grid, tileDataArray)
-	    		GridPathfinding_DebugTileData(tileDataArray)
+	    		
 	    endif
 	     
 	    if(GetRawKeyPressed(13))

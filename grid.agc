@@ -313,6 +313,7 @@ function GridExpander_PushBackRow(grid ref as Grid)
 		x = grid.rows[grid.rows.length].tiles[i].gridPosition.x
 		y = grid.rows[grid.rows.length].tiles[grid.rows[grid.rows.length].tiles.length].gridPosition.y + 1
 		
+		//I think these should be converted to minus values?
 		tile = Tile_Create(Vector2D_CreateVector(x, y))
 		row.tiles[i] = tile
 	next i
