@@ -97,15 +97,19 @@ function GameContext_Update(gameContext ref as GameContext)
 	
 		    
 	 if(GetPointerPressed())
+	 		/*
 			GridPathfinding_ResetTileDataDistances(gameContext.tileDataArray)
 			
 			if(Grid_GetTileFromWorldPosition(gameContext.grid, tile, Vector2D_CreateVector(ScreenToWorldX(GetPointerX()), ScreenToWorldY(GetPointerY()))) <> -1)
 				GridPathfinding_UpdatePathDistances(gameContext.grid, gameContext.tileDataArray, tile)
 				GridPathfinding_DebugTileData(gameContext.tileDataArray)
 			endif
+			*/
+			
+			Spawner_SpawnEnemy(gameContext.grid, 0)
     		endif
     		
-    		GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
+    		//GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
 endfunction
 
 function GameContext_NextCycle(gameContext ref as GameContext)

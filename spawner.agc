@@ -35,3 +35,14 @@
 
 */
 
+function Spawner_SpawnEnemy(grid ref as Grid, enemyType as integer)
+	index = Random(0, grid.newTiles.length)
+	
+	// Generate Random Boundary Position
+	position as Vector2D
+	position = Grid_GetTileCenterByIndex(grid, grid.newTiles[index].gridPosition.x, grid.newTiles[index].gridPosition.y)
+	
+	// Create the enemy
+	enemy as Enemy
+	enemy = Enemy_Create(position, 0, 1)
+endfunction

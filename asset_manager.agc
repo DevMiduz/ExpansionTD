@@ -37,6 +37,8 @@ global ASSET_IMAGE_GUI_PAUSE_UP_BUTTON as integer
 
 global ASSET_IMAGE_TERRAIN_TILESET as integer
 
+global ASSET_IMAGE_BASIC_CIRCLE_ENEMY_SPRITESHEET as integer
+
 //	GLOBALS -- SOUNDS
 global ASSET_SOUND_SELECT_SOUND_1 as integer
 global ASSET_SOUND_SELECT_SOUND_2 as integer
@@ -106,6 +108,9 @@ function AssetManager_LoadImages(assetManager ref as AssetManager)
 	
 	ASSET_IMAGE_TERRAIN_TILESET = LoadImage("Tiles/terrain_tileset.png")
 	assetManager.images.insert(ASSET_IMAGE_TERRAIN_TILESET)
+	
+	ASSET_IMAGE_BASIC_CIRCLE_ENEMY_SPRITESHEET = LoadImage("Enemies/basic_circle_enemies.png")
+	assetManager.images.insert(ASSET_IMAGE_BASIC_CIRCLE_ENEMY_SPRITESHEET)
 endfunction
 
 function AssetManager_LoadSounds(assetManager ref as AssetManager)

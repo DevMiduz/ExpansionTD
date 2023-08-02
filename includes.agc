@@ -32,6 +32,7 @@
 #include "map.agc"
 #include "player.agc"
 #include "enemy.agc"
+#include "spawner.agc"
 
 #include "scene_manager.agc"
 #include "input_handler.agc"

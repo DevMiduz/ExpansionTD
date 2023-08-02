@@ -357,6 +357,7 @@ function GridPathfinding_DrawGrid(grid ref as Grid, tileDataArray ref as TileDat
 			
 			position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
 			
+			
 			if(GetTextExists(tileData.distanceText) = 0)
 				tileData.distanceText = CreateText(str(tileData.distance))
 			endif
