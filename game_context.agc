@@ -47,41 +47,58 @@ function GameContext_Init(gameContext ref as GameContext)
 	// Setup Grid
 	gameContext.grid = Grid_Create(16, Vector2D_CreateVector(0,0))
 	
+	gameContext.grid.newTiles.insert(gameContext.grid.rows[0].tiles[0])	
+	
 	// Expand Grid
-	gameContext.gridExpander.eastOffset = 1
-	gameContext.gridExpander.westOffset = 1
+	gameContext.gridExpander.eastOffset = 3
+	gameContext.gridExpander.westOffset = 3
 	gameContext.gridExpander.northOffset = 0
-	gameContext.gridExpander.southOffset = 1
+	gameContext.gridExpander.southOffset = 3
 	GridExpander_ExpandGrid(gameContext.grid, gameContext.gridExpander)
 	
 	// Calculate Path Finding Distances
-	GridPathfinding_InitGrid(gameContext.grid, gameContext.gridExpander, gameContext.tileDataArray)
 	
 	tile as Tile 
-	Grid_GetTileFromWorldPosition(gameContext.grid, tile, Vector2D_CreateVector(0, 0))
+	tileData as TileData
 	
-	GridPathfinding_UpdatePathDistances(gameContext.grid, gameContext.tileDataArray, tile)
-	//GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
+	GridPathfinding_InitGrid(gameContext.grid, gameContext.gridExpander, gameContext.tileDataArray)
+	gameContext.grid.previousTiles = gameContext.grid.newTiles
+	gameContext.grid.newTiles.length = -1
 	
+	repeat
+		// Init Grid
+		GridPathfinding_InitGrid(gameContext.grid, gameContext.gridExpander, gameContext.tileDataArray)
+		Grid_GetTileFromGridPosition(gameContext.grid, tile, Vector2D_CreateVector(0,0))
+		
+		// Calculate Path Finding Distances
+		GridPathfinding_ResetTileDataDistances(gameContext.tileDataArray)
+		GridPathfinding_UpdatePathDistances(gameContext.grid, gameContext.tileDataArray, tile)
+	
+		Grid_GetTileFromGridPosition(gameContext.grid, tile, Grid_GetBottomRightPosition(gameContext.grid))
+		GridPathfinding_GetTileData(gameContext.tileDataArray, tileData, tile.id)
+		// Until valid pathable grid is build.
+	until tileData.distance <> -1
+	
+	GameContext_NextCycle(gameContext)
+
 endfunction
 
 function GameContext_Update(gameContext ref as GameContext)
 	// Update Camera
 	Camera_Update(GameContext.camera)
 	
+	
+	tile as Tile
+	tileData as TileData
+	
 	if(InputHandler_Data.confirm = CONST_INPUT_PRESSED)
-			inc gameContext.gridExpander.eastOffset
-			inc gameContext.gridExpander.westOffset
-			inc gameContext.gridExpander.southOffset
-			GridExpander_ExpandGrid(gameContext.grid, gameContext.gridExpander)
-			GridPathfinding_InitGrid(gameContext.grid, gameContext.gridExpander, gameContext.tileDataArray)
+		GameContext_NextCycle(gameContext)
 	endif
 	
 		    
 	 if(GetPointerPressed())
 			GridPathfinding_ResetTileDataDistances(gameContext.tileDataArray)
 			
-			tile as Tile
 			if(Grid_GetTileFromWorldPosition(gameContext.grid, tile, Vector2D_CreateVector(ScreenToWorldX(GetPointerX()), ScreenToWorldY(GetPointerY()))) <> -1)
 				GridPathfinding_UpdatePathDistances(gameContext.grid, gameContext.tileDataArray, tile)
 				GridPathfinding_DebugTileData(gameContext.tileDataArray)
@@ -89,6 +106,30 @@ function GameContext_Update(gameContext ref as GameContext)
     		endif
     		
     		GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
+endfunction
+
+function GameContext_NextCycle(gameContext ref as GameContext)
+	tile as Tile
+	tileData as TileData
+	
+	gameContext.grid.previousTiles = gameContext.grid.newTiles
+	gameContext.grid.newTiles.length = -1
+	
+	inc gameContext.gridExpander.eastOffset
+	inc gameContext.gridExpander.westOffset
+	inc gameContext.gridExpander.southOffset
+			
+	GridExpander_ExpandGrid(gameContext.grid, gameContext.gridExpander)
+			
+	repeat
+		GridPathfinding_InitGrid(gameContext.grid, gameContext.gridExpander, gameContext.tileDataArray)
+		Grid_GetTileFromGridPosition(gameContext.grid, tile, Vector2D_CreateVector(0,0))
+		GridPathfinding_ResetTileDataDistances(gameContext.tileDataArray)
+		GridPathfinding_UpdatePathDistances(gameContext.grid, gameContext.tileDataArray, tile)
+	
+		Grid_GetTileFromGridPosition(gameContext.grid, tile, Grid_GetBottomRightPosition(gameContext.grid))
+		GridPathfinding_GetTileData(gameContext.tileDataArray, tileData, tile.id)
+	until tileData.distance <> -1
 endfunction
 
 function GameContext_Draw(gameContext ref as GameContext)

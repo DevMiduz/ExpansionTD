@@ -69,8 +69,8 @@
 #constant CONST_MAP_TERRAIN_TYPE_UNBUILDABLE = 5
 
 // Map Terrain Types Chances
-#constant CONST_MAP_TERRAIN_TYPE_BUILDABLE_CHANCE = 10 	// Higher is worse.
-#constant CONST_MAP_TERRAIN_TYPE_IMPASSIBLE_CHANCE = 20	// Higher is worse.
+#constant CONST_MAP_TERRAIN_TYPE_BUILDABLE_CHANCE = 2	// Higher is worse.
+#constant CONST_MAP_TERRAIN_TYPE_IMPASSIBLE_CHANCE = 2	// Higher is worse.
 
 // Event ID Constants
 #constant CONST_GAME_STARTED_EVENT_ID = 0

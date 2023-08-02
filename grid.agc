@@ -29,6 +29,8 @@ type Grid
 	id as integer
 	tileSize as integer
 	rows as Row[]
+	newTiles as Tile[]
+	previousTiles as Tile[]
 endtype
 
 type Row
@@ -297,8 +299,13 @@ function GridExpander_PushFrontRow(grid ref as Grid)
 		y = grid.rows[0].tiles[i].gridPosition.y - 1
 		
 		tile = Tile_Create(Vector2D_CreateVector(x, y))
+	
+		grid.newTiles.insert(tile)
+		
 		row.tiles[i] = tile
 	next i
+	
+	grid.newTiles.sort()
 	
 	grid.rows.insert(row, 0)
 endfunction
@@ -313,10 +320,14 @@ function GridExpander_PushBackRow(grid ref as Grid)
 		x = grid.rows[grid.rows.length].tiles[i].gridPosition.x
 		y = grid.rows[grid.rows.length].tiles[grid.rows[grid.rows.length].tiles.length].gridPosition.y + 1
 		
-		//I think these should be converted to minus values?
 		tile = Tile_Create(Vector2D_CreateVector(x, y))
+		
+		grid.newTiles.insert(tile)
+		
 		row.tiles[i] = tile
 	next i
+	
+	grid.newTiles.sort()
 	
 	grid.rows.insert(row)
 endfunction
@@ -329,8 +340,13 @@ function GridExpander_PushFrontColumn(grid ref as Grid)
 		y = grid.rows[i].tiles[0].gridPosition.y
 		
 		tile = Tile_Create(Vector2D_CreateVector(x, y))
+		
+		grid.newTiles.insert(tile)
+		
 		grid.rows[i].tiles.insert(tile, 0)
 	next i
+	
+	grid.newTiles.sort()
 endfunction
 
 function GridExpander_PushBackColumn(grid ref as Grid)
@@ -341,8 +357,13 @@ function GridExpander_PushBackColumn(grid ref as Grid)
 		y = grid.rows[i].tiles[grid.rows[i].tiles.length].gridPosition.y
 		
 		tile = Tile_Create(Vector2D_CreateVector(x, y))
+		
+		grid.newTiles.insert(tile)
+		
 		grid.rows[i].tiles.insert(tile)
 	next i
+	
+	grid.newTiles.sort()
 endfunction
 
 /*

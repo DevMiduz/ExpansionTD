@@ -166,40 +166,49 @@ function GridPathfinding_InitTileData(grid ref as Grid, tileDataArray ref as Til
 	
 	SceneManager_GetCurrentScene(sceneManager, scene)
 	
-	for rowIndex = 0 to grid.rows.length
-		row = grid.rows[rowIndex]
-		for colIndex = 0 to row.tiles.length
-			tile = row.tiles[colIndex]
-			
-			if(GridPathfinding_GetTileData(tileDataArray, tileData, tile.id) <> -1)
-				if(tileData.status = CONST_MAP_TERRAIN_TYPE_UNBUILDABLE)
-					tileData.status = Map_GetRandomTileType()
-					Map_SetTileTerrainSpriteFrame(tileData.sprite, tileData.status)
-					GridPathfinding_InsertOrUpdateTileData(tileDataArray, tileData)
-				endif
+	for i = 0 to grid.previousTiles.length
+		
+		tile = grid.previousTiles[i]
+		
+		if(GridPathfinding_GetTileData(tileDataArray, tileData, tile.id) <> -1)
+			if(tile.gridPosition.x = 0 and tile.gridPosition.y = 0)
+				tileData.status = CONST_MAP_TERRAIN_TYPE_PROTECTED
 			else
-				if(tile.gridPosition.x = 0 and tile.gridPosition.y = 0)
-					tileData = TileData_Create(tile.id, CONST_MAP_TERRAIN_TYPE_PROTECTED, -1)
-				elseif(tile.gridPosition.x = tlPosition.x or tile.gridPosition.x = brPosition.x or tile.gridPosition.y = brPosition.y)
-					tileData = TileData_Create(tile.id, CONST_MAP_TERRAIN_TYPE_UNBUILDABLE, -1)
-				else
-					tileData = TileData_Create(tile.id, Map_GetRandomTileType(), -1)
-				endif
-				
-				
-				tileData.sprite = Map_CreateTileTerrainSprite(tileData.status)
-				Scene_InsertSprite(scene, tileData.sprite)
-				
-				position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
-				
-				SetSpriteDepth(tileData.sprite, CONST_DEPTH_GAME_MIDDLE)
-				SetSpritePosition(tileData.sprite, position.x, position.y)
-				GridPathfinding_InsertOrUpdateTileData(tileDataArray, tileData)
+				tileData.status = Map_GetRandomTileType()
 			endif
-		next colIndex
-	next rowIndex
+			
+			Map_SetTileTerrainSpriteFrame(tileData.sprite, tileData.status)
+					
+			position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
+					
+			SetSpriteDepth(tileData.sprite, CONST_DEPTH_GAME_MIDDLE)
+			SetSpritePosition(tileData.sprite, position.x, position.y)
+			GridPathfinding_InsertOrUpdateTileData(tileDataArray, tileData)
+		endif
+	next i
 	
-	
+	for i = 0 to grid.newTiles.length
+		tile = grid.newTiles[i]
+			
+		if(tile.gridPosition.x = 0 and tile.gridPosition.y = 0)
+			tileData = TileData_Create(tile.id, CONST_MAP_TERRAIN_TYPE_PROTECTED, -1)
+		elseif(tile.gridPosition.x = tlPosition.x or tile.gridPosition.x = brPosition.x or tile.gridPosition.y = brPosition.y)
+			tileData = TileData_Create(tile.id, CONST_MAP_TERRAIN_TYPE_UNBUILDABLE, -1)
+		else
+			tileData = TileData_Create(tile.id, Map_GetRandomTileType(), -1)
+		endif
+				
+				
+		tileData.sprite = Map_CreateTileTerrainSprite(tileData.status)
+		Scene_InsertSprite(scene, tileData.sprite)
+				
+		position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
+				
+		SetSpriteDepth(tileData.sprite, CONST_DEPTH_GAME_MIDDLE)
+		SetSpritePosition(tileData.sprite, position.x, position.y)
+		GridPathfinding_InsertOrUpdateTileData(tileDataArray, tileData)
+		
+	next i
 	
 	SceneManager_UpdateCurrentScene(sceneManager, scene)
 	
@@ -346,20 +355,7 @@ function GridPathfinding_DrawGrid(grid ref as Grid, tileDataArray ref as TileDat
 			tile = Grid_GetTileFromGridIndex(grid, Vector2D_CreateVector(colIndex, rowIndex))
 			GridPathfinding_GetTileData(tileDataArray, tileData, tile.id)
 			
-			/*
-			if(tileData.status = TILE_OPEN)
-				color = MakeColor( 255, 255, 255 )
-			elseif(tileData.status = TILE_CLOSED)
-				color = MakeColor( 0, 0, 255 )
-			elseif(tileData.status = TILE_IMPASSIBLE)
-				color = MakeColor( 255, 0, 0 )
-			endif
-			*/
-			
-			
 			position = Grid_GetTileWorldPosition(grid, tile.gridPosition.x, tile.gridPosition.y)
-			//DrawBox(WorldToScreenX(position.x), WorldToScreenY(position.y), WorldToScreenX(position.x + grid.tileSize), WorldToScreenY(position.y + grid.tileSize), color, color, color, color, 0)
-			
 			
 			if(GetTextExists(tileData.distanceText) = 0)
 				tileData.distanceText = CreateText(str(tileData.distance))
@@ -377,7 +373,7 @@ function GridPathfinding_DrawGrid(grid ref as Grid, tileDataArray ref as TileDat
 	next rowIndex
 endfunction
 
-function GridPathfinding_InitGrid(grid ref as Grid, GridExpander ref as GridExpander, tileDataArray ref as TileData[])	
+function GridPathfinding_InitGrid(grid ref as Grid, GridExpander ref as GridExpander, tileDataArray ref as TileData[])
 	GridExpander_ExpandGrid(grid, gridExpander)
 	GridPathfinding_InitTileData(grid, tileDataArray)
 	GridPathfinding_DebugTileData(tileDataArray)
@@ -430,10 +426,12 @@ function GridPathfinding_TestUtility()
 	    		inc gridExpander.northOffset
 	    		inc gridExpander.southOffset
 	    		GridExpander_ExpandGrid(grid, gridExpander)
+	    		
+	    		
 	    		GridPathfinding_InitTileData(grid, tileDataArray)
 	    		
 	    endif
-	     
+     
 	    if(GetRawKeyPressed(13))
 	    		GridPathfinding_RandomiseTileData(tileDataArray)
 	   	endif
