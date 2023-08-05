@@ -58,11 +58,17 @@ endtype
 	Movement frequence will be based upon speed.
 */
 
-function Enemy_UpdateEnemy(grid ref as Grid, gridDataArray ref as GridData[], enemy ref as Enemy)
-	
+function Enemy_UpdateEnemy(grid ref as Grid, tileDataArray ref as TileData[], enemy ref as Enemy)
+	Enemy_UpdateEnemyDirection(enemy)
+	Enemy_MoveEnemy(grid, tileDataArray, enemy)
 endfunction
 
-function Enemy_MoveEnemy(grid ref as Grid, enemy ref as Enemy)
+function Enemy_MoveEnemy(grid ref as Grid, tileDataArray ref as TileData[], enemy ref as Enemy)
+	if(enemy.previousMovementTimestamp + (1.0 / enemy.speed) <= Timer())
+		Enemy_UpdateEnemyPosition(grid, enemy)
+		Enemy_FindNextPathPoint(grid, tileDataArray, enemy)
+		enemy.previousMovementTimestamp =  Timer()
+	endif
 	
 endfunction
 
@@ -160,6 +166,16 @@ function Enemy_UpdateEnemyDirection(enemy ref as Enemy)
 		//FACE UP
 		SetSpriteAngle(enemy.sprite, 270)
 	endif
+endfunction
+
+
+function Enemy_UpdateEnemyPosition(grid ref as Grid, enemy ref as Enemy)
+	enemy.position.x = enemy.nextPathPoint.x
+	enemy.position.y = enemy.nextPathPoint.y
+	
+	position as Vector2D
+	position = Grid_GetTileWorldPosition(grid, enemy.position.x, enemy.position.y)
+	SetSpritePosition(enemy.sprite, position.x, position.y)
 endfunction
 
 function Enemy_Create(position as Vector2D, typeId as integer, level as integer)

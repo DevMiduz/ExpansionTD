@@ -35,6 +35,11 @@
 
 */
 
+/*
+	TODO CHECK NO ENEMIES ON GREY SQUARES WHEN EXPANDING.
+	WONT NEED TO IF WE ONLY END A TURN WHEN ALL HAVE DIED
+*/
+
 function Spawner_SpawnEnemy(grid ref as Grid, tileDataArray ref as tileData[], enemyType as integer)
 	index = Random(0, grid.newTiles.length)
 	
@@ -54,5 +59,6 @@ function Spawner_SpawnEnemy(grid ref as Grid, tileDataArray ref as tileData[], e
 	//Find Next Position
 	Enemy_FindNextPathPoint(grid, tileDataArray, enemy)
 	Enemy_UpdateEnemyDirection(enemy)
+	enemy.previousMovementTimestamp = Timer()
 	
-endfunction
+endfunction enemy

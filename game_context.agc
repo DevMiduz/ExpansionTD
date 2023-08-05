@@ -30,6 +30,7 @@ type GameContext
 	grid as Grid
 	gridExpander as GridExpander
 	tileDataArray as TileData[]
+	enemies as Enemy[]
 endtype
 
 /*
@@ -106,10 +107,19 @@ function GameContext_Update(gameContext ref as GameContext)
 			endif
 			*/
 			
-			Spawner_SpawnEnemy(gameContext.grid, gameContext.tileDataArray, 0)
-    		endif
+			gameContext.enemies.insert(Spawner_SpawnEnemy(gameContext.grid, gameContext.tileDataArray, 0))
+			gameContext.enemies.sort()
+    	endif
     		
-    		//GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
+    		
+    	//GridPathfinding_DrawGrid(gameContext.grid, gameContext.tileDataArray)
+    	GameContext_UpdateEnemies(gameContext)
+endfunction
+
+function GameContext_UpdateEnemies(gameContext ref as GameContext)
+	for i = 0 to gameContext.enemies.length
+		Enemy_UpdateEnemy(gameContext.grid, gameContext.tileDataArray, gameContext.enemies[i])
+	next i
 endfunction
 
 function GameContext_NextCycle(gameContext ref as GameContext)
